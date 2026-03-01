@@ -11,7 +11,7 @@
         u.nombre_unidad,
         IFNULL(COUNT(l.id_lote),0) AS total_lotes
     FROM productos p
-    LEFT JOIN unidad_medida u ON p.id_unidad = u.id_unidad
+    LEFT JOIN unidad_medida u ON p.unidad_id = u.id_unidad
     LEFT JOIN lotes l ON p.id_producto = l.producto_id
     ";
 
@@ -75,7 +75,7 @@
         <td><?= $row['id_producto'] ?></td>
         <td><?= $row['nombre_comercial'] ?></td>
         <td><?= $row['nombre_comun'] ?></td>
-        <td><?= $row['nombre_unidad'] ?></td>
+        <td><?= $row['nombre_unidad'] ?? '-' ?></td>
         <td><?= $row['categoria_producto'] ?></td>
         <td>
         <span class="badge text-dark">

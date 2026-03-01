@@ -8,7 +8,6 @@
         l.fecha_entrada,
         l.fecha_caducidad,
         l.fecha_salida,
-        l.tipo_movimiento,
         l.estado,
         p.nombre_comercial,
         pr.nombre AS nombre_proveedor
@@ -65,7 +64,6 @@ value="<?= htmlspecialchars($busqueda) ?>">
 <th>Fecha Entrada</th>
 <th>Fecha Caducidad</th>
 <th>Fecha Salida</th>
-<th>Movimiento</th>
 <th>Estado</th>
 <th>Acciones</th>
 </tr>
@@ -88,7 +86,6 @@ $alerta = "";
 <td><?= $row['fecha_entrada'] ?></td>
 <td><?= $row['fecha_caducidad'] ?></td>
 <td><?= $row['fecha_salida'] ?? '-' ?></td>
-<td><?= $row['tipo_movimiento'] ?></td>
 
 <td>
 <?php if ($row['estado'] == 1): ?>
