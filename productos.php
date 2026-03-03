@@ -39,12 +39,15 @@
     <meta charset="UTF-8">
     <title>Productos</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/productos.css">
     </head>
     <body class="bg-light">
 
         <div class="container py-4">
 
-        <h2 class="text-center mb-4">Lista de Productos</h2>
+        <div class="titulo-contenedor">
+            <h2>Lista de Productos</h2>
+        </div>
 
         <form method="get" class="d-flex mb-3">
         <input type="text" name="q" class="form-control me-2"
@@ -90,8 +93,12 @@
         <a href="eliminar_producto.php?id=<?= $row['id_producto'] ?>" 
         class="btn btn-danger btn-sm"
         onclick="return confirm('¿Eliminar producto?')">Borrar</a>
+
+        <a href="editar_producto.php?id=<?= $row['id_producto'] ?>" 
+        class="btn btn-success btn-sm">Usar</a>
         </td>
         </tr>
+
         <?php endwhile; ?>
         <?php else: ?>
         <tr>

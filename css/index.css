@@ -1,0 +1,51 @@
+h1 {
+        /*Color del titulo principal*/
+        color: white;
+        font-weight: 700;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: -1;
+    }
+
+    .header-bar {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        padding: 30px 0;
+        color: white;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .header-bar h1 {
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+
+    .main-content {
+        margin-top: 60px;
+    }
+
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+    
+    body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../imagenes/fondoPrin.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+    }
