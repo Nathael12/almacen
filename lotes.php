@@ -52,7 +52,7 @@ placeholder="Buscar por producto o proveedor..."
 value="<?= htmlspecialchars($busqueda) ?>">
 <button class="btn btn-primary">Buscar</button>
 <a href="agregar_lote.php" class="btn btn-success ms-2">Agregar</a>
-<a href="index.php" class="btn btn-secondary ms-2">Inicio</a>
+<a href="productos.php" class="btn btn-secondary ms-2">Regresar</a>
 </form>
 
 <table class="table table-bordered table-striped">
@@ -99,9 +99,7 @@ $alerta = "";
 <a href="editar_lote.php?id=<?= $row['id_lote'] ?>" 
 class="btn btn-warning btn-sm">Editar</a>
 
-<a href="eliminar_lote.php?id=<?= $row['id_lote'] ?>" 
-class="btn btn-danger btn-sm"
-onclick="return confirm('¿Eliminar lote?')">Borrar</a>
+<a class="btn btn-danger btn-sm">Borrar</a>
 </td>
 </tr>
 

@@ -85,20 +85,22 @@
         <?= $row['total_lotes'] ?>
         </span>
         </td>
-        <td>
-            
-        <a href="editar_producto.php?id=<?= $row['id_producto'] ?>" 
-        class="btn btn-warning btn-sm">Editar</a>
+        
+        <td> 
+            <div class="d-flex justify-content-center gap-2">
+                <a href="editar_producto.php?id=<?= $row['id_producto'] ?>" 
+                class="btn btn-warning btn-sm">Editar</a>
 
-        <a href="eliminar_producto.php?id=<?= $row['id_producto'] ?>" 
-        class="btn btn-danger btn-sm"
-        onclick="return confirm('¿Eliminar producto?')">Borrar</a>
+                <a class="btn btn-danger btn-sm">Borrar</a>
 
-        <a href="editar_producto.php?id=<?= $row['id_producto'] ?>" 
-        class="btn btn-success btn-sm">Usar</a>
+                <a class="btn btn-success btn-sm">Usar</a>
+
+                <a href="lotes.php?producto_id=<?= $row['id_producto'] ?>" 
+                class="btn btn-info btn-sm">Lotes</a>
+            </div>
         </td>
-        </tr>
 
+        </tr>
         <?php endwhile; ?>
         <?php else: ?>
         <tr>

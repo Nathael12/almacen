@@ -31,10 +31,10 @@
                 <div class="col-md-4 mb-4">
                     <div class="card shadow h-100">
                         <div class="card-body text-center">
-                            <h4>Lotes</h4>
-                            <img src="imagenes/lote.png" alt="lotes" class="img-fluid mb-3" style="max-height: 100px;">
-                            <p>Entradas y fechas de caducidad</p>
-                            <a href="lotes.php" class="btn btn-success w-100">Entrar</a>
+                            <h4>Agregar</h4>
+                            <img src="imagenes/agregar.png" alt="agregar" class="img-fluid mb-3" style="max-height: 100px;">
+                            <p>Agregar los productos</p>
+                            <a href="agregar_producto.php" class="btn btn-dark w-100">Entrar</a>
                         </div>
                     </div>
                 </div>
