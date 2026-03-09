@@ -46,7 +46,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card shadow h-100">
                         <div class="card-body text-center">
-                            <h4>Registros</h4>
+                            <h4>Historial de Registros</h4>
                             <img src="imagenes/registro.png" alt="registro" class="img-fluid mb-3" style="max-height: 100px;">
                             <p>.</p>
                             <a href="registro.php" class="btn btn-danger w-100">Entrar</a>
