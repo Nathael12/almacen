@@ -41,14 +41,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Editar Producto</title>
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/editarProducto.css">
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container py-4">
+<div class="container py-5">
 
 <h2 class="text-center mb-4">Editar Producto</h2>
+
+<div class="form-container">
 
 <form method="POST">
 
@@ -56,45 +61,64 @@
 
 <div class="col-md-6 mb-3">
 <label>Nombre Comercial</label>
-<input type="text" name="nombre_comercial" 
+<input type="text" name="nombre_comercial"
 class="form-control"
 value="<?= $row['nombre_comercial'] ?>" required>
 </div>
 
 <div class="col-md-6 mb-3">
 <label>Nombre Común</label>
-<input type="text" name="nombre_comun" 
+<input type="text" name="nombre_comun"
 class="form-control"
 value="<?= $row['nombre_comun'] ?>">
 </div>
 
 <div class="col-md-6 mb-3">
 <label>Categoría</label>
-<input type="text" name="categoria_producto" 
+<input type="text" name="categoria_producto"
 class="form-control"
 value="<?= $row['categoria_producto'] ?>">
 </div>
 
 <div class="col-md-6 mb-3">
 <label>Unidad de Medida</label>
+
 <select name="unidad_id" class="form-control" required>
 
 <?php while($u = $unidades->fetch_assoc()): ?>
+
 <option value="<?= $u['id_unidad'] ?>"
 <?= ($u['id_unidad'] == $row['unidad_id']) ? 'selected' : '' ?>>
+
 <?= $u['nombre_unidad'] ?>
+
 </option>
+
 <?php endwhile; ?>
 
 </select>
-</div>
 
 </div>
 
-<button type="submit" class="btn btn-warning">Actualizar</button>
-<a href="productos.php" class="btn btn-secondary">Cancelar</a>
+</div>
+
+<div class="text-center mt-3">
+
+<button type="submit" class="btn btn-warning me-2">
+Actualizar
+</button>
+
+<a href="productos.php" class="btn btn-secondary">
+Cancelar
+</a>
+
+</div>
 
 </form>
+
 </div>
+
+</div>
+
 </body>
 </html>
