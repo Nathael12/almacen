@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../imagenes/fondoPrin.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('../imagenes/fondoPrin.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
