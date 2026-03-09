@@ -24,13 +24,13 @@
     }
     $unidades = $conn->query("SELECT * FROM unidad_medida");
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Agregar Producto</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/agregarProductos.css">
 </head>
 
 <body class="bg-light">
@@ -40,6 +40,8 @@
 <div class="titulo-contenedor">
     <h2>Agregar Producto</h2>
 </div>
+
+<div class="card-form p-4 bg-white">
 
 <form method="POST">
 
@@ -80,6 +82,10 @@
 <a href="productos.php" class="btn btn-secondary">Cancelar</a>
 
 </form>
-</div>
+
+</div> <!-- card-form -->
+
+</div> <!-- container -->
+
 </body>
 </html>
