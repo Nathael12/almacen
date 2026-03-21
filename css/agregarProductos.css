@@ -1,0 +1,37 @@
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('../imagenes/productosAlmacen.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* titulo */
+.titulo-contenedor{
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+}
+
+/* tarjeta del formulario */
+.card-form{
+    max-width:750px;
+    margin:auto;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    background:white;
+}
+
+/* inputs más suaves */
+.form-control{
+    border-radius:8px;
+    padding:10px;
+}
+
+/* botones */
+.btn{
+    min-width:120px;
+    border-radius:8px;
+}
+
