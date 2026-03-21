@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 session_start();
 $logged = $_SESSION['LOGGED'] ?? 0;
@@ -156,5 +155,3 @@ $activos = $conn->query("SELECT COUNT(*) as total FROM lotes WHERE estado = 1")-
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-=======
->>>>>>> main
