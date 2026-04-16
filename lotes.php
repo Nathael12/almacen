@@ -29,7 +29,6 @@ if (!empty($_GET['q'])) {
 $productos = $conn->query("SELECT * FROM productos");
 $proveedores = $conn->query("SELECT * FROM proveedor");
 
-// Reset punteros para modales
 $productos->data_seek(0);
 $proveedores->data_seek(0);
 ?>
@@ -40,19 +39,17 @@ $proveedores->data_seek(0);
     <meta charset="UTF-8">
     <title>Lotes</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/productos.css"> <!-- ✅ CAMBIO: productos.css -->
+    <link rel="stylesheet" href="css/lotes.css">
 </head>
 <body>
     <?php include("navbar.php"); ?>
 
     <div class="container py-4">
         
-        <!-- ✅ AGREGADO: titulo-contenedor -->
         <div class="titulo-contenedor">
             <h2>Control de Lotes</h2>
         </div>
 
-        <!-- ✅ Tu formulario exacto -->
         <form method="get" class="d-flex mb-3">
             <input type="text" name="q" class="form-control me-2" 
                    placeholder="Buscar por producto o proveedor..." 
@@ -64,7 +61,6 @@ $proveedores->data_seek(0);
             </button>
         </form>
 
-        <!-- ✅ Tu tabla exacta -->
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -95,7 +91,7 @@ $proveedores->data_seek(0);
                                 <span class="badge bg-secondary">Inactivo</span>
                             <?php endif; ?>
                         </td>
-                        <!-- ✅ td:last-child para CSS -->
+
                         <td>
                             <div class="d-flex justify-content-center gap-2">
                                 <button class="btn btn-warning btn-sm" 
@@ -117,7 +113,6 @@ $proveedores->data_seek(0);
         </table>
     </div>
 
-    <!-- ✅ Tus modales exactos -->
     <?php include_once('modals/modal_agregar_lote.php'); ?>
     <?php include_once('modals/modal_editar_lote.php'); ?>
 

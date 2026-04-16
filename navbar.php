@@ -1,5 +1,4 @@
 <?php
-// navbar_perfecto.php - Mantiene lo dinámico pero súper simple
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -22,13 +21,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($current_page=='registro.php') ? 'active' : '' ?>" href="registro.php">
-            <i class="bi bi-clipboard-check me-1"></i>Registros
+          <a class="nav-link <?= ($current_page=='lotes.php') ? 'active' : '' ?>" href="lotes.php">
+            <i class="bi bi-layers me-1"></i>Lotes
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($current_page=='lotes.php') ? 'active' : '' ?>" href="lotes.php">
-            <i class="bi bi-layers me-1"></i>Lotes
+          <a class="nav-link <?= ($current_page=='registro.php') ? 'active' : '' ?>" href="registro.php">
+            <i class="bi bi-clipboard-check me-1"></i>Registros
           </a>
         </li>
         <li class="nav-item">
