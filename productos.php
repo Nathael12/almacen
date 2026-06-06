@@ -16,17 +16,20 @@ if (isset($_SESSION['mensaje'])) {
 
 $busqueda = "";
 
+// Consulta SQL modificada: FILTRA con "WHERE p.estado = 1" para ocultar de la pantalla lo borrado lógicamente
 $sql = "
-SELECT p.id_producto, p.nombre_comercial, p.nombre_comun, p.categoria_producto,
+SELECT p.id_producto, p.nombre_comercial, p.nombre_comun, p.categoria_producto, p.estado,
        p.unidad_id, u.nombre_unidad, IFNULL(COUNT(l.id_lote), 0) AS total_lotes
 FROM productos p
 LEFT JOIN unidad_medida u ON p.unidad_id = u.id_unidad
 LEFT JOIN lotes l ON p.id_producto = l.producto_id
+WHERE p.estado = 1
 ";
 
 if (!empty($_GET['q'])) {
     $busqueda = $_GET['q'];
-    $sql .= " WHERE p.nombre_comercial LIKE ? OR p.nombre_comun LIKE ? OR p.categoria_producto LIKE ?";
+    // Encadenamos los LIKE con un AND para mantener el filtro de estado activo
+    $sql .= " AND (p.nombre_comercial LIKE ? OR p.nombre_comun LIKE ? OR p.categoria_producto LIKE ?)";
     $sql .= " GROUP BY p.id_producto";
     $stmt = $conn->prepare($sql);
     $like = "%$busqueda%";
@@ -103,34 +106,73 @@ $unidades = $conn->query("SELECT * FROM unidad_medida");
                                 <?= $row['total_lotes'] ?>
                             </span>
                         </td>
-                        <td> 
+                        <td>
                             <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-warning btn-sm" 
-                                        data-bs-toggle="modal" 
+
+                                <button class="btn btn-warning btn-sm"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#modalEditar<?= $row['id_producto'] ?>">
                                     Editar
                                 </button>
-                                <a class="btn btn-danger btn-sm">Borrar</a>
-                                <a class="btn btn-success btn-sm">Usar</a>
-                                <a href="registro.php?id_producto=<?= $row['id_producto'] ?>" 
-                                   class="btn btn-info btn-sm">Lotes</a>
+
+                                <button type="button" 
+                                        class="btn btn-danger btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalInactivarProducto"
+                                        data-id="<?= $row['id_producto'] ?>"
+                                        data-nombre="<?= htmlspecialchars($row['nombre_comercial'], ENT_QUOTES) ?>">
+                                    Borrar
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalUsarProducto"
+                                        onclick="cargarProducto(
+                                            <?= $row['id_producto'] ?>,
+                                            '<?= htmlspecialchars($row['nombre_comercial'], ENT_QUOTES) ?>'
+                                        )">
+                                    Usar
+                                </button>
+
+                                <a href="registro.php?id_producto=<?= $row['id_producto'] ?>"
+                                   class="btn btn-info btn-sm">
+                                    Lotes
+                                </a>
+
                             </div>
                         </td>
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7" class="text-center text-white">No hay productos registrados</td>
+                        <td colspan="7" class="text-center text-muted py-3">No hay productos registrados activos.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
-
     </div>
 
     <?php include_once('modals/modal_agregar_producto.php'); ?>
     <?php include_once('modals/modal_editar_productos.php'); ?>
+    <?php include_once('modals/modal_usar_producto.php'); ?>
+    <?php include_once('modals/modal_borrar_producto.php'); ?> 
 
     <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    const modalInactivarProd = document.getElementById('modalInactivarProducto');
+    if (modalInactivarProd) {
+        modalInactivarProd.addEventListener('show.bs.modal', event => {
+            const boton = event.relatedTarget;
+            
+            const idProducto = boton.getAttribute('data-id');
+            const nombreProducto = boton.getAttribute('data-nombre');
+            
+            modalInactivarProd.querySelector('#id_producto_modal').value = idProducto;
+            modalInactivarProd.querySelector('#nombre_producto_modal').textContent = nombreProducto;
+        });
+    }
+    </script>
 </body>
 </html>
