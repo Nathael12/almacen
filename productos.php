@@ -1,9 +1,8 @@
 <?php
 session_start();
-$logged = $_SESSION['LOGGED'] ?? 0;
-
-if ($logged == 0) {
-    //header('Location: index.php');
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
 }
 
 include("common/conexion.php");

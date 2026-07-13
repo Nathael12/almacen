@@ -1,0 +1,178 @@
+body{
+    margin:0;
+    padding:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f4f4f4;
+    font-family:'Segoe UI', sans-serif;
+    overflow:hidden;
+    position:relative;
+}
+
+/* EFECTOS DE FONDO */
+body::before{
+    content:'';
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(244,197,66,0.25);
+    border-radius:50%;
+    top:-150px;
+    left:-100px;
+    filter:blur(90px);
+}
+
+body::after{
+    content:'';
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:rgba(0,0,0,0.04);
+    border-radius:50%;
+    bottom:-130px;
+    right:-100px;
+    filter:blur(80px);
+}
+
+/* CONTENEDOR */
+.login-container{
+    width:420px;
+    position:relative;
+}
+
+/* LOGIN */
+.login-card{
+    background:#fff;
+    border-radius:25px;
+    padding:90px 35px 35px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.10);
+    position:relative;
+    border-top:7px solid #f4c542;
+}
+
+/* ICONO */
+.user-icon{
+    width:110px;
+    height:110px;
+    background:#f4c542;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:absolute;
+    top:-55px;
+    left:50%;
+    transform:translateX(-50%);
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.user-icon i{
+    font-size:42px;
+    color:#222;
+}
+
+/* TITULOS */
+.title{
+    text-align:center;
+    font-size:30px;
+    color:#222;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:30px;
+    font-size:14px;
+}
+
+/* INPUTS */
+.input-group-custom{
+    display:flex;
+    margin-bottom:20px;
+    height:55px;
+}
+
+.input-icon{
+    width:55px;
+    background:#f4c542;
+    color:#222;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:14px 0 0 14px;
+    font-size:18px;
+}
+
+.form-control-custom{
+    flex:1;
+    border:none;
+    outline:none;
+    background:#f8f8f8;
+    padding:0 15px;
+    font-size:15px;
+    border-radius:0 14px 14px 0;
+    border:1px solid #ececec;
+    transition:0.3s;
+}
+
+.form-control-custom:focus{
+    border-color:#f4c542;
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(244,197,66,0.18);
+}
+
+/* OPCIONES */
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    font-size:13px;
+    color:#555;
+}
+
+.options a{
+    color:#777;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.options a:hover{
+    color:#222;
+}
+
+/* BOTON */
+.btn-login{
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:14px;
+    background:#f4c542;
+    color:#222;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 8px 18px rgba(244,197,66,0.35);
+}
+
+.btn-login:hover{
+    background:#e0b731;
+    transform:translateY(-2px);
+}
+
+/* ALERTA */
+.alert-custom{
+    background:#ffe5e5;
+    color:#c0392b;
+    border-left:5px solid #e74c3c;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:14px;
+}
