@@ -2,56 +2,52 @@
 session_start();
 include("../common/conexion.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_lote'])) {
-    $id_lote = intval($_POST['id_lote']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_producto']) && !empty($_POST['id_lotes'])) {
+    
     $id_producto = intval($_POST['id_producto']);
-    $cantidad_usada = intval($_POST['cantidad']);
+    $id_lotes = array_map('intval', $_POST['id_lotes']); // Recibe el arreglo de IDs de lotes
+    $cantidad_usada = count($id_lotes);
+    $fecha_actual = date('Y-m-d');
 
-    // 1. Validar existencias del lote activo
-    $sql = "SELECT cantidad FROM lotes WHERE id_lote = ? AND estado = 1";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_lote);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($lote = $result->fetch_assoc()) {
-        $stock_actual = $lote['cantidad'];
-
-        if ($cantidad_usada > $stock_actual) {
-            $_SESSION['mensaje'] = "Error: La cantidad solicitada supera las existencias del lote.";
-            $_SESSION['tipo_mensaje'] = "danger";
-        } else {
-            $nuevo_stock = $stock_actual - $cantidad_usada;
-
-            // 2. Actualizar la cantidad restante en el lote
-            $update = $conn->prepare("UPDATE lotes SET cantidad = ? WHERE id_lote = ?");
-            $update->bind_param("ii", $nuevo_stock, $id_lote);
-            $update->execute();
-
-            // Si el lote se vacía, lo desactivamos y guardamos su fecha de cierre
-            if ($nuevo_stock == 0) {
-                $cerrar = $conn->prepare("UPDATE lotes SET estado = 0, fecha_salida = CURDATE() WHERE id_lote = ?");
-                $cerrar->bind_param("i", $id_lote);
-                $cerrar->execute();
-            }
-
-            // 3. REGISTRO EN LA TABLA SALIDAS: Esencial para el reporte de frecuencias
-            // Se usa CURDATE() directo en SQL para evitar desfases de horario con PHP
-            $historial = $conn->prepare("INSERT INTO salidas (producto_id, lote_id, cantidad_usada, fecha_salida) VALUES (?, ?, ?, CURDATE())");
-            $historial->bind_param("iii", $id_producto, $id_lote, $cantidad_usada);
-            $historial->execute();
-
-            $_SESSION['mensaje'] = "Se descontaron exitosamente $cantidad_usada unidades.";
-            $_SESSION['tipo_mensaje'] = "success";
-        }
-    } else {
-        $_SESSION['mensaje'] = "El lote seleccionado no existe o está inactivo.";
+    if ($cantidad_usada <= 0) {
+        $_SESSION['mensaje'] = "Debe seleccionar al menos un lote.";
         $_SESSION['tipo_mensaje'] = "warning";
+        header("Location: ../productos.php");
+        exit();
     }
+
+    $conn->begin_transaction();
+
+    try {
+        // 1. Insertar la salida general (o total de unidades usadas) en la tabla SALIDAS
+        $insert_salida = $conn->prepare("INSERT INTO salidas (producto_id, cantidad_usada, fecha_salida) VALUES (?, ?, ?)");
+        $insert_salida->bind_param("iis", $id_producto, $cantidad_usada, $fecha_actual);
+        $insert_salida->execute();
+
+        // 2. Desactivar todos los lotes seleccionados uno a uno
+        $cerrar_lote = $conn->prepare("UPDATE lotes SET estado = 0, fecha_salida = ? WHERE id_lote = ? AND estado = 1");
+
+        foreach ($id_lotes as $id_lote) {
+            $cerrar_lote->bind_param("si", $fecha_actual, $id_lote);
+            $cerrar_lote->execute();
+        }
+
+        $conn->commit();
+
+        $_SESSION['mensaje'] = "Salida de $cantidad_usada lote(s) registrada exitosamente.";
+        $_SESSION['tipo_mensaje'] = "success";
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $_SESSION['mensaje'] = "Error al procesar la salida: " . $e->getMessage();
+        $_SESSION['tipo_mensaje'] = "danger";
+    }
+
 } else {
-    $_SESSION['mensaje'] = "Datos de formulario incompletos.";
+    $_SESSION['mensaje'] = "Por favor completa todos los campos del formulario.";
     $_SESSION['tipo_mensaje'] = "danger";
 }
 
 header("Location: ../productos.php");
 exit();
+?>

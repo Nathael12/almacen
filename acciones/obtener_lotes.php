@@ -1,27 +1,25 @@
 <?php
 include("../common/conexion.php");
 
-if (isset($_GET['id_producto'])) {
-    $id_producto = intval($_GET['id_producto']);
+header('Content-Type: application/json');
 
-    $sql = "SELECT id_lote, cantidad, fecha_caducidad 
-            FROM lotes 
-            WHERE producto_id = ? AND estado = 1 AND cantidad > 0 
-            ORDER BY fecha_caducidad ASC";
-            
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_producto);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$id_producto = $_GET['id_producto'] ?? 0;
 
-    $lotes = [];
-    while ($row = $result->fetch_assoc()) {
-        // Formateamos la fecha a algo legible
-        $row['fecha_f'] = date('d/m/Y', strtotime($row['fecha_caducidad']));
-        $lotes[] = $row;
-    }
+$sql = "SELECT id_lote, 
+               DATE_FORMAT(fecha_entrada, '%d/%m/%Y') as fecha_entrada_f, 
+               DATE_FORMAT(fecha_caducidad, '%d/%m/%Y') as fecha_caducidad_f 
+        FROM lotes 
+        WHERE producto_id = ? AND estado = 1 
+        ORDER BY fecha_caducidad ASC";
 
-    header('Content-Type: application/json');
-    echo json_encode($lotes);
-    exit;
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_producto);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$lotes = [];
+while ($row = $result->fetch_assoc()) {
+    $lotes[] = $row;
 }
+
+echo json_encode($lotes);

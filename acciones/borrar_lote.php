@@ -5,7 +5,7 @@ include("../common/conexion.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_lote'])) {
     $id_lote = intval($_POST['id_lote']);
 
-    // UPDATE en lugar de DELETE: Cambia estado a 0 y sella la fecha de término hoy
+    // UPDATE en lugar de DELETE: Cambia estado a 0 y sella la fecha de t茅rmino hoy
     $sql = "UPDATE lotes SET estado = 0, fecha_salida = CURDATE() WHERE id_lote = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_lote);
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_lote'])) {
             $_SESSION['mensaje'] = "El lote ha sido marcado como terminado e inactivo correctamente.";
             $_SESSION['tipo_mensaje'] = "success";
         } else {
-            $_SESSION['mensaje'] = "El lote ya estaba inactivo o no se encontró.";
+            $_SESSION['mensaje'] = "El lote ya estaba inactivo o no se encontr贸.";
             $_SESSION['tipo_mensaje'] = "info";
         }
     } else {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_lote'])) {
         $_SESSION['tipo_mensaje'] = "danger";
     }
 } else {
-    $_SESSION['mensaje'] = "Petición inválida.";
+    $_SESSION['mensaje'] = "Petici贸n inv谩lida.";
     $_SESSION['tipo_mensaje'] = "danger";
 }
 

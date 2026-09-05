@@ -35,18 +35,19 @@ $pdf->Cell(25, 8, 'ENTREGO', 1, 1, 'C');
 
 $pdf->SetFont('Arial', '', 9);
 
-// NUEVA CONSULTA: Lee directamente del historial de salidas del día de hoy
+$fecha_hoy = date('Y-m-d');
+
 $sql = "
 SELECT s.fecha_salida, p.nombre_comercial, s.cantidad_usada
 FROM salidas s
 INNER JOIN productos p ON s.producto_id = p.id_producto
-WHERE s.fecha_salida = CURDATE()
+WHERE DATE(s.fecha_salida) = '$fecha_hoy'
 ORDER BY s.id_salida DESC
 ";
 
 $result = $conn->query($sql);
 
-if ($result->num_rows == 0) {
+if (!$result || $result->num_rows == 0) {
     $pdf->Cell(190, 10, utf8_decode('No hay productos utilizados el día de hoy'), 1, 1, 'C');
 } else {
     $dias = [
@@ -62,10 +63,7 @@ if ($result->num_rows == 0) {
         $pdf->Cell(25, 8, $fecha, 1, 0, 'C');
         $pdf->Cell(25, 8, utf8_decode($dia), 1, 0, 'C');
         $pdf->Cell(70, 8, utf8_decode($row['nombre_comercial']), 1, 0, 'L');
-        
-        // Muestra la cantidad exacta guardada en el registro de salida
         $pdf->Cell(20, 8, $row['cantidad_usada'], 1, 0, 'C'); 
-        
         $pdf->Cell(25, 8, '', 1, 0, 'C'); 
         $pdf->Cell(25, 8, '', 1, 1, 'C'); 
     }

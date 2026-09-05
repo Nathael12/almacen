@@ -4,14 +4,12 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
-
 include("common/conexion.php");
 
 $busqueda = "";
 
-// Consulta SQL modificada: Se añade "WHERE l.estado = 1" para que lo inactivado no se muestre en pantalla
 $sql = "
-SELECT l.id_lote, l.producto_id, l.proveedor_id, l.cantidad,
+SELECT l.id_lote, l.producto_id, l.proveedor_id,
        l.fecha_entrada, l.fecha_caducidad, l.fecha_salida, l.estado,
        p.nombre_comercial, pr.nombre AS nombre_proveedor
 FROM lotes l
@@ -22,7 +20,6 @@ WHERE l.estado = 1
 
 if (!empty($_GET['q'])) {
     $busqueda = $_GET['q'];
-    // Encadenamos la búsqueda con un AND para respetar que el lote deba estar activo
     $sql .= " AND (p.nombre_comercial LIKE ? OR pr.nombre LIKE ?)";
     $sql .= " ORDER BY l.fecha_caducidad ASC";
     $stmt = $conn->prepare($sql);
@@ -37,11 +34,7 @@ if (!empty($_GET['q'])) {
 
 $productos = $conn->query("SELECT * FROM productos");
 $proveedores = $conn->query("SELECT * FROM proveedor");
-
-$productos->data_seek(0);
-$proveedores->data_seek(0);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -73,10 +66,9 @@ $proveedores->data_seek(0);
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>#</th> <!-- Cambiado de ID a # -->
                     <th>Producto</th>
                     <th>Proveedor</th>
-                    <th>Cantidad</th>
                     <th>Fecha Entrada</th>
                     <th>Fecha Caducidad</th>
                     <th>Fecha Salida</th>
@@ -86,16 +78,14 @@ $proveedores->data_seek(0);
             </thead>
             <tbody>
                 <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php 
+                    $num = 1; // Inicializamos el contador correlativo
+                    while ($row = $result->fetch_assoc()): 
+                    ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['id_lote']) ?></td>
+                        <td><?= $num++ ?></td> <!-- Número de lista continuo -->
                         <td><?= htmlspecialchars($row['nombre_comercial']) ?></td>
                         <td><?= htmlspecialchars($row['nombre_proveedor']) ?></td>
-                        <td>
-                            <span class="badge bg-primary">
-                                <?= $row['cantidad'] ?>
-                            </span>
-                        </td>
                         <td><?= date('d/m/Y', strtotime($row['fecha_entrada'])) ?></td>
                         <td><?= date('d/m/Y', strtotime($row['fecha_caducidad'])) ?></td>
                         <td>
@@ -132,7 +122,7 @@ $proveedores->data_seek(0);
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9" class="text-center text-muted py-3">
+                        <td colspan="8" class="text-center text-muted py-3">
                             No se encontraron lotes activos registrados.
                         </td>
                     </tr>

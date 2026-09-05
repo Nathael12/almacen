@@ -10,12 +10,9 @@
                     
                     <div class="mb-3">
                         <label class="form-label">Producto</label>
-                        <select name="producto_id" class="form-control" required>
+                        <select name="producto_id" class="form-select" required>
                             <option value="">Seleccione</option>
-                            <?php 
-                            // Reutiliza de forma limpia la variable global de lotes.php
-                            while($p = $productos->fetch_assoc()): 
-                            ?>
+                            <?php while($p = $productos->fetch_assoc()): ?>
                                 <option value="<?= $p['id_producto'] ?>">
                                     <?= htmlspecialchars($p['nombre_comercial']) ?>
                                 </option>
@@ -25,12 +22,9 @@
 
                     <div class="mb-3">
                         <label class="form-label">Proveedor</label>
-                        <select name="proveedor_id" class="form-control" required>
+                        <select name="proveedor_id" class="form-select" required>
                             <option value="">Seleccione</option>
-                            <?php 
-                            // Reutiliza de forma limpia la variable global de lotes.php
-                            while($pr = $proveedores->fetch_assoc()): 
-                            ?>
+                            <?php while($pr = $proveedores->fetch_assoc()): ?>
                                 <option value="<?= $pr['id_proveedor'] ?>">
                                     <?= htmlspecialchars($pr['nombre']) ?>
                                 </option>
@@ -46,11 +40,6 @@
                     <div class="mb-3">
                         <label class="form-label">Fecha Caducidad</label>
                         <input type="date" name="fecha_caducidad" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Cantidad</label>
-                        <input type="number" name="cantidad" class="form-control" min="1" required>
                     </div>
 
                 </div>

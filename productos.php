@@ -4,7 +4,6 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
-
 include("common/conexion.php");
 
 if (isset($_SESSION['mensaje'])) {
@@ -15,19 +14,17 @@ if (isset($_SESSION['mensaje'])) {
 
 $busqueda = "";
 
-// Consulta SQL modificada: FILTRA con "WHERE p.estado = 1" para ocultar de la pantalla lo borrado lógicamente
 $sql = "
 SELECT p.id_producto, p.nombre_comercial, p.nombre_comun, p.categoria_producto, p.estado,
        p.unidad_id, u.nombre_unidad, IFNULL(COUNT(l.id_lote), 0) AS total_lotes
 FROM productos p
 LEFT JOIN unidad_medida u ON p.unidad_id = u.id_unidad
-LEFT JOIN lotes l ON p.id_producto = l.producto_id
+LEFT JOIN lotes l ON p.id_producto = l.producto_id AND l.estado = 1
 WHERE p.estado = 1
 ";
 
 if (!empty($_GET['q'])) {
     $busqueda = $_GET['q'];
-    // Encadenamos los LIKE con un AND para mantener el filtro de estado activo
     $sql .= " AND (p.nombre_comercial LIKE ? OR p.nombre_comun LIKE ? OR p.categoria_producto LIKE ?)";
     $sql .= " GROUP BY p.id_producto";
     $stmt = $conn->prepare($sql);
@@ -39,10 +36,8 @@ if (!empty($_GET['q'])) {
     $sql .= " GROUP BY p.id_producto";
     $result = $conn->query($sql);
 }
-
 $unidades = $conn->query("SELECT * FROM unidad_medida");
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,7 +77,7 @@ $unidades = $conn->query("SELECT * FROM unidad_medida");
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>#</th> <!-- Cambiado de ID a # -->
                     <th>Nombre Comercial</th>
                     <th>Nombre Común</th>
                     <th>Unidad</th>
@@ -93,9 +88,12 @@ $unidades = $conn->query("SELECT * FROM unidad_medida");
             </thead>
             <tbody>
                 <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php 
+                    $num = 1; // Contador inicial
+                    while ($row = $result->fetch_assoc()): 
+                    ?>
                     <tr>
-                        <td><?= $row['id_producto'] ?></td>
+                        <td><?= $num++ ?></td> <!-- Imprime el número correlativo y luego incrementa -->
                         <td><?= htmlspecialchars($row['nombre_comercial']) ?></td>
                         <td><?= htmlspecialchars($row['nombre_comun']) ?></td>
                         <td><?= $row['nombre_unidad'] ?? '-' ?></td>
@@ -134,11 +132,6 @@ $unidades = $conn->query("SELECT * FROM unidad_medida");
                                     Usar
                                 </button>
 
-                                <a href="registro.php?id_producto=<?= $row['id_producto'] ?>"
-                                   class="btn btn-info btn-sm">
-                                    Lotes
-                                </a>
-
                             </div>
                         </td>
                     </tr>
@@ -164,7 +157,6 @@ $unidades = $conn->query("SELECT * FROM unidad_medida");
     if (modalInactivarProd) {
         modalInactivarProd.addEventListener('show.bs.modal', event => {
             const boton = event.relatedTarget;
-            
             const idProducto = boton.getAttribute('data-id');
             const nombreProducto = boton.getAttribute('data-nombre');
             

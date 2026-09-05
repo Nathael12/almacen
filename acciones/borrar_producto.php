@@ -5,7 +5,7 @@ include("../common/conexion.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_producto'])) {
     $id_producto = intval($_POST['id_producto']);
 
-    // Borrado lógico: Cambia el estado a 0 (Inactivo)
+    // Borrado l贸gico: Cambia el estado a 0 (Inactivo)
     $sql = "UPDATE productos SET estado = 0 WHERE id_producto = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_producto);
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_producto'])) {
         $_SESSION['tipo_mensaje'] = "danger";
     }
 } else {
-    $_SESSION['mensaje'] = "Petición inválida.";
+    $_SESSION['mensaje'] = "Petici贸n inv谩lida.";
     $_SESSION['tipo_mensaje'] = "danger";
 }
 

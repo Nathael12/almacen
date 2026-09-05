@@ -27,14 +27,14 @@ $mesNombre = [
 ];
 
 /* =========================
-    CONSULTA: CUENTA LAS FRECUENCIAS DE USO DIARIAS
+    CONSULTA CORREGIDA: SUMA LAS CANTIDADES USADAS
 ========================= */
 $sql = "
 SELECT 
     p.id_producto,
     p.nombre_comercial,
     s.fecha_salida,
-    COUNT(s.id_salida) as veces_usado
+    SUM(s.cantidad_usada) as total_usado
 FROM salidas s
 INNER JOIN productos p ON p.id_producto = s.producto_id
 WHERE MONTH(s.fecha_salida) = $mes
@@ -54,12 +54,12 @@ while($row = $result->fetch_assoc()){
     $producto = $row['id_producto'];
     $nombre = $row['nombre_comercial'];
     $fechaStr = $row['fecha_salida'];
-    $frecuencia_dia = (int)$row['veces_usado']; 
+    $cantidad_dia = (int)$row['total_usado']; // Ahora obtiene la SUMA real
     
     $timestamp = strtotime($fechaStr);
     $diaSemana = (int)date("N", $timestamp); // Lunes (1) a Domingo (7)
 
-    // Filtrar estrictamente de Lunes a Viernes (1 a 5) según el formato
+    // Filtrar estrictamente de Lunes a Viernes (1 a 5)
     if($diaSemana <= 5){
         $diaMes = (int)date("d", $timestamp);
         
@@ -72,8 +72,8 @@ while($row = $result->fetch_assoc()){
         if(!isset($reporte[$producto]['datos'][$semana][$diaSemana])){
             $reporte[$producto]['datos'][$semana][$diaSemana] = 0;
         }
-        // Sumar las repeticiones de uso del producto en el mismo día
-        $reporte[$producto]['datos'][$semana][$diaSemana] += $frecuencia_dia;
+        // Sumar la cantidad real utilizada
+        $reporte[$producto]['datos'][$semana][$diaSemana] += $cantidad_dia;
     }
 }
 
@@ -85,7 +85,7 @@ $pdf->AddPage();
 $pdf->SetMargins(10, 10, 10);
 $pdf->SetAutoPageBreak(true, 15);
 
-/* LOGO INSTITUTIONAL */
+/* LOGO INSTITUCIONAL */
 if(file_exists('imagenes/inpi.png')) {
     $pdf->Image('imagenes/inpi.png', 15, 10, 38);
 }
