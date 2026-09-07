@@ -56,7 +56,7 @@ include("common/conexion.php");
 
         <div class="row g-4">
 
-            <!-- 1. REPORTE DIARIO -->
+            <!-- REPORTE DIARIO -->
             <div class="col-md-6">
                 <div class="report-box h-100 d-flex flex-column justify-content-between">
                     <div>
@@ -77,7 +77,8 @@ include("common/conexion.php");
                 </div>
             </div>
 
-            <!-- 2. REPORTE MENSUAL -->
+
+            <!-- REPORTE MENSUAL -->
             <div class="col-md-6">
                 <div class="report-box h-100 d-flex flex-column justify-content-between">
                     <div>
@@ -99,6 +100,54 @@ include("common/conexion.php");
                         <button class="btn btn-dark w-100 py-2 fw-semibold" onclick="generarReporteMensual()">
                             Generar Reporte Mensual
                         </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- REPORTE SEMANAL -->
+            <div class="col-md-6">
+                <div class="report-box h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-success fs-6 p-2 me-2">Semanal</span>
+                            <h4 class="fw-bold text-dark mb-0">Reporte de la Semana</h4>
+                        </div>
+
+                        <p class="text-secondary mb-3">
+                            Genera un informe con todos los movimientos realizados durante la semana actual.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-top mt-3">
+                       <a href="reporte_pdf_Semanal.php" target="_blank" 
+                        class="btn btn-success w-100 py-2 fw-semibold">
+                            Descargar PDF Semanal
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--  HISTORIAL SEMANAL -->
+            <div class="col-md-6">
+                <div class="report-box h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-secondary fs-6 p-2 me-2">Historial</span>
+                            <h4 class="fw-bold text-dark mb-0">Historial Semanal</h4>
+                        </div>
+
+                        <p class="text-secondary mb-3">
+                            Consulta los reportes de semanas anteriores y genera nuevamente el PDF de cualquier semana registrada.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-top mt-3">
+                        <a href="historial_semanal.php"
+                           class="btn btn-secondary w-100 py-2 fw-semibold">
+                            Consultar Historial
+                        </a>
                     </div>
                 </div>
             </div>
