@@ -884,7 +884,6 @@ $activos = $conn->query("
 
 
 </table>
-```
 
 </div>
 

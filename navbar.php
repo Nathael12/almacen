@@ -16,6 +16,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-1">
         <li class="nav-item">
+          <a class="nav-link nav-link-custom <?= ($current_page=='index.php') ? 'active' : '' ?>" href="index.php">
+            <i class="bi bi-box me-1"></i>Principal
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link nav-link-custom <?= ($current_page=='productos.php') ? 'active' : '' ?>" href="productos.php">
             <i class="bi bi-box me-1"></i>Productos
           </a>
