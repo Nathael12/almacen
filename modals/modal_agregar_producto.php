@@ -1,62 +1,157 @@
 <!-- MODAL AGREGAR -->
 
-<div class="modal fade" id="modalAgregarProducto">
+<div class="modal fade" id="modalAgregarProducto" tabindex="-1">
 
-<div class="modal-dialog">
-<div class="modal-content">
+    <div class="modal-dialog">
 
-<form action="acciones/agregar_producto.php" method="POST">
+        <div class="modal-content">
 
-<div class="modal-header">
-<h5 class="modal-title">Agregar Producto</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-</div>
+            <form action="acciones/agregar_producto.php" method="POST">
 
-<div class="modal-body">
+                <div class="modal-header">
 
-<div class="mb-3">
-<label>Nombre Comercial</label>
-<input type="text" name="nombre_comercial" class="form-control" required>
-</div>
+                    <h5 class="modal-title">
+                        Agregar Producto
+                    </h5>
 
-<div class="mb-3">
-<label>Nombre Común</label>
-<input type="text" name="nombre_comun" class="form-control">
-</div>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
 
-<div class="mb-3">
-<label>Categoría</label>
-<input type="text" name="categoria_producto" class="form-control">
-</div>
+                </div>
 
-<div class="mb-3">
 
-<label>Unidad de Medida</label>
+                <div class="modal-body">
 
-<select name="unidad_id" class="form-control" required>
+                    <!-- NOMBRE COMERCIAL -->
 
-<option value="">Seleccione</option>
+                    <div class="mb-3">
 
-<?php while($u = $unidades->fetch_assoc()): ?>
+                        <label class="form-label">
+                            Nombre Comercial
+                        </label>
 
-<option value="<?= $u['id_unidad'] ?>">
-<?= $u['nombre_unidad'] ?>
-</option>
+                        <input type="text"
+                               name="nombre_comercial"
+                               class="form-control"
+                               placeholder="Ej. Detergente Ariel Doble Poder"
+                               required>
 
-<?php endwhile; ?>
+                    </div>
 
-</select>
 
-</div>
+                    <!-- NOMBRE COMÚN -->
 
-</div>
+                    <div class="mb-3">
 
-<div class="modal-footer">
-<button class="btn btn-success">Guardar</button>
-</div>
+                        <label class="form-label">
+                            Nombre Común
+                        </label>
 
-</form>
+                        <input type="text"
+                               name="nombre_comun"
+                               class="form-control"
+                               placeholder="Ej. Jabón de ropa">
 
-</div>
-</div>
+                    </div>
+
+
+                    <!-- PRESENTACIÓN -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Presentación / Contenido
+                        </label>
+
+                        <input type="number"
+                               name="presentacion"
+                               class="form-control"
+                               step="0.01"
+                               min="0"
+                               placeholder="Ej. 54"
+                               required>
+
+                        <small class="text-muted">
+                            Indique la cantidad que contiene el producto.
+                        </small>
+
+                    </div>
+
+
+                    <!-- UNIDAD DE MEDIDA -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Unidad de Medida
+                        </label>
+
+                        <select name="unidad_id"
+                                class="form-control"
+                                required>
+
+                            <option value="">
+                                Seleccione una unidad
+                            </option>
+
+                            <?php while ($u = $unidades->fetch_assoc()): ?>
+
+                                <option value="<?= $u['id_unidad'] ?>">
+
+                                    <?= htmlspecialchars($u['nombre_unidad']) ?>
+
+                                </option>
+
+                            <?php endwhile; ?>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- CATEGORÍA -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Categoría
+                        </label>
+
+                        <input type="text"
+                               name="categoria_producto"
+                               class="form-control"
+                               placeholder="Ej. Polvos">
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
 </div>
