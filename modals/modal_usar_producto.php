@@ -162,6 +162,40 @@
                     </div>
 
 
+
+                    <!-- FECHA DE USO -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="fecha_uso"
+                            class="form-label fw-bold">
+
+                            4. Fecha de uso
+
+                        </label>
+
+
+                        <input
+                            type="date"
+                            name="fecha_uso"
+                            id="fecha_uso"
+                            class="form-control"
+                            value="<?= date('Y-m-d') ?>"
+                            max="<?= date('Y-m-d') ?>"
+                            required>
+
+
+                        <small class="text-muted">
+
+                            Selecciona la fecha en que realmente
+                            se utilizó el producto.
+
+                        </small>
+
+                    </div>
+
+
                 </div>
 
 
@@ -294,6 +328,7 @@ function alCambiarProducto(idProducto) {
             );
 
         }
+
 
         return response.json();
 

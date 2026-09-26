@@ -1,7 +1,6 @@
 <?php
-include("common/conexion.php");
 
-// CONSULTAR FECHAS DE SALIDAS
+include("common/conexion.php");
 
 $sql = "
 SELECT DISTINCT DATE(fecha_salida) AS fecha
@@ -10,10 +9,6 @@ ORDER BY fecha DESC
 ";
 
 $result = $conn->query($sql);
-
-
-// CREAR LISTA DE SEMANAS
-
 
 $semanas = [];
 
@@ -25,29 +20,17 @@ if ($result && $result->num_rows > 0) {
 
         $timestamp = strtotime($fecha);
 
-        // Número del día de la semana
-        // 1 = lunes
-        // 7 = domingo
         $dia_semana = date('N', $timestamp);
-
-
-        // OBTENER LUNES DE LA SEMANA
-    
 
         $lunes = date(
             'Y-m-d',
             strtotime("-" . ($dia_semana - 1) . " days", $timestamp)
         );
 
-        // OBTENER DOMINGO DE LA SEMANA
-      
-
         $domingo = date(
             'Y-m-d',
             strtotime("+6 days", strtotime($lunes))
         );
-
-        // GUARDAR SEMANA
 
         if (!isset($semanas[$lunes])) {
 
@@ -59,10 +42,6 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-// ORDENAR SEMANAS DE LA MÁS RECIENTE
-// A LA MÁS ANTIGUA
-
-
 krsort($semanas);
 
 ?>
@@ -73,32 +52,43 @@ krsort($semanas);
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Historial de Reportes Semanales</title>
 
-    <link
-        rel="stylesheet"
-        href="css/bootstrap.min.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="css/registro.css"
-    >
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/registro.css">
 
     <style>
 
         body {
-            background-color: #f4f6f9 !important;
+            background-image: linear-gradient(
+                rgba(0, 0, 0, 0.88),
+                rgba(0, 0, 0, 0.88)
+            ), url('imagenes/fondoPrin.jpg');
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         .main-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: rgba(15, 15, 15, 0.90);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
             padding: 2rem;
+        }
+
+        .main-card h2 {
+            color: white !important;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .main-card p {
+            color: #eeeeee !important;
         }
 
         .table {
@@ -111,6 +101,27 @@ krsort($semanas);
 
         .btn-pdf {
             min-width: 100px;
+            background-color: #747e88 !important;
+            border-color: #747e88 !important;
+            color: white !important;
+        }
+
+        .btn-pdf:hover {
+            background-color: #66707a !important;
+            border-color: #66707a !important;
+            color: white !important;
+        }
+
+        .btn-regresar {
+            background-color: #747e88;
+            border-color: #747e88;
+            color: white;
+        }
+
+        .btn-regresar:hover {
+            background-color: #66707a;
+            border-color: #66707a;
+            color: white;
         }
 
     </style>
@@ -121,41 +132,40 @@ krsort($semanas);
 
 <?php include("navbar.php"); ?>
 
-
 <div class="container py-4">
 
     <div class="main-card">
 
-        <!-- ENCABEZADO -->
-
         <div class="text-center mb-4 pb-3 border-bottom">
 
-            <h2 class="fw-bold text-dark mb-0">
+            <h2 class="mb-0">
                 Historial de Reportes Semanales
             </h2>
 
-            <p class="text-secondary mt-2 mb-0">
+            <p class="mt-2 mb-0">
                 Consulta los reportes semanales registrados en el almacén.
             </p>
 
         </div>
 
+        <div class="mb-4">
+
+            <a
+                href="reportes.php"
+                class="btn btn-regresar"
+            >
+                ← Regresar a Reportes
+            </a>
+
+        </div>
 
         <?php if (empty($semanas)): ?>
 
-            <!-- SIN REGISTROS -->
-
             <div class="alert alert-info text-center">
-
                 No existen registros para mostrar.
-
             </div>
 
-
         <?php else: ?>
-
-
-            <!-- TABLA -->
 
             <div class="table-responsive">
 
@@ -166,19 +176,14 @@ krsort($semanas);
                         <tr>
 
                             <th>#</th>
-
                             <th>Semana</th>
-
                             <th>Fecha inicial</th>
-
                             <th>Fecha final</th>
-
                             <th>Acción</th>
 
                         </tr>
 
                     </thead>
-
 
                     <tbody>
 
@@ -192,28 +197,16 @@ krsort($semanas);
 
                         <tr>
 
-                            <!-- NUMERO -->
-
                             <td class="text-center">
-
                                 <?php echo $contador; ?>
-
                             </td>
 
-
-                            <!-- SEMANA -->
-
                             <td class="text-center fw-semibold">
-
                                 Semana <?php echo date(
                                     'W',
                                     strtotime($semana['lunes'])
                                 ); ?>
-
                             </td>
-
-
-                            <!-- FECHA INICIAL -->
 
                             <td class="text-center">
 
@@ -227,9 +220,6 @@ krsort($semanas);
                                 ?>
 
                             </td>
-
-
-                            <!-- FECHA FINAL -->
 
                             <td class="text-center">
 
@@ -244,14 +234,11 @@ krsort($semanas);
 
                             </td>
 
-
-                            <!-- ACCION -->
-
                             <td class="text-center">
 
-                             <a href="reporte_pdf_Semanal.php?fecha=<?php echo urlencode($semana['lunes']);
-                                 ?>" target="_blank" ...
-                                    class="btn btn-primary btn-sm btn-pdf"
+                                <a href="reporte_pdf_Semanal.php?fecha=<?php echo urlencode($semana['lunes']); ?>"
+                                   target="_blank"
+                                   class="btn btn-primary btn-sm btn-pdf"
                                 >
                                     Ver PDF
                                 </a>
@@ -274,14 +261,11 @@ krsort($semanas);
 
             </div>
 
-
         <?php endif; ?>
-
 
     </div>
 
 </div>
-
 
 <script src="js/bootstrap.bundle.min.js"></script>
 

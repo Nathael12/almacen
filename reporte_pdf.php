@@ -1,73 +1,142 @@
 <?php
+
 require('fpdf186/fpdf.php');
-include("common/conexion.php");
+include('common/conexion.php');
 
-$pdf = new FPDF();
-$pdf->AddPage();
+$mes = isset($_GET['mes']) ? intval($_GET['mes']) : date('n');
+$anio = isset($_GET['anio']) ? intval($_GET['anio']) : date('Y');
 
-// LOGO
-if (file_exists('imagenes/inpi.png')) {
-    $pdf->Image('imagenes/inpi.png', 10, 8, 45);
+if ($mes < 1 || $mes > 12) {
+    $mes = date('n');
 }
 
-// ENCABEZADO
-$pdf->Ln(25);
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(0, 6, 'INSTITUTO NACIONAL DE LOS PUEBLOS INDIGENAS', 0, 1, 'C');
+if ($anio < 2000 || $anio > 2100) {
+    $anio = date('Y');
+}
 
-$pdf->SetFont('Arial', '', 10);
-$pdf->Cell(0, 5, 'CASA COMUNITARIA DEL ESTUDIANTE INDIGENA', 0, 1, 'C');
-$pdf->Cell(0, 5, '"JACINTO PAAT"', 0, 1, 'C');
-$pdf->Ln(3);
+$primer_dia = sprintf('%04d-%02d-01', $anio, $mes);
+$ultimo_dia = date('Y-m-t', strtotime($primer_dia));
+
+$meses = [
+    1 => 'ENERO',
+    2 => 'FEBRERO',
+    3 => 'MARZO',
+    4 => 'ABRIL',
+    5 => 'MAYO',
+    6 => 'JUNIO',
+    7 => 'JULIO',
+    8 => 'AGOSTO',
+    9 => 'SEPTIEMBRE',
+    10 => 'OCTUBRE',
+    11 => 'NOVIEMBRE',
+    12 => 'DICIEMBRE'
+];
+
+$nombre_mes = $meses[$mes];
+
+$sql = "
+    SELECT
+        p.nombre_comercial,
+        SUM(l.cantidad) AS cantidad
+    FROM lotes l
+    INNER JOIN productos p
+        ON l.producto_id = p.id_producto
+    WHERE l.fecha_entrada BETWEEN '$primer_dia' AND '$ultimo_dia'
+    GROUP BY p.id_producto, p.nombre_comercial
+    ORDER BY p.nombre_comercial ASC
+";
+
+$resultado = $conn->query($sql);
+
+if (!$resultado) {
+    die("Error en la consulta: " . $conn->error);
+}
+
+$pdf = new FPDF('P', 'mm', 'Letter');
+$pdf->AddPage();
+
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->Cell(
+    0,
+    10,
+    iconv('UTF-8', 'windows-1252', 'REPORTE DE PRODUCTOS INGRESADOS'),
+    0,
+    1,
+    'C'
+);
+
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(
+    0,
+    8,
+    $nombre_mes . ' ' . $anio,
+    0,
+    1,
+    'C'
+);
+
+$pdf->Ln(8);
 
 $pdf->SetFont('Arial', 'B', 11);
-$pdf->Cell(0, 6, 'REQUERIMIENTO DIARIO', 0, 1, 'C');
-$pdf->Ln(5);
 
-// TABLA ENCABEZADO
-$pdf->SetFont('Arial', 'B', 9);
-$pdf->Cell(25, 8, 'FECHA', 1, 0, 'C');
-$pdf->Cell(25, 8, 'DIA', 1, 0, 'C');
-$pdf->Cell(70, 8, 'REQUERIMIENTO', 1, 0, 'C');
-$pdf->Cell(20, 8, 'CANT.', 1, 0, 'C');
-$pdf->Cell(25, 8, 'SOLICITO', 1, 0, 'C');
-$pdf->Cell(25, 8, 'ENTREGO', 1, 1, 'C');
+$pdf->Cell(130, 8, 'PRODUCTO', 1, 0, 'C');
+$pdf->Cell(50, 8, 'CANTIDAD', 1, 1, 'C');
+
+$pdf->SetFont('Arial', '', 10);
+
+$total = 0;
+
+if ($resultado->num_rows > 0) {
+
+    while ($fila = $resultado->fetch_assoc()) {
+
+        $producto = iconv(
+            'UTF-8',
+            'windows-1252',
+            $fila['nombre_comercial']
+        );
+
+        $cantidad = intval($fila['cantidad']);
+
+        $pdf->Cell(130, 8, $producto, 1, 0, 'L');
+        $pdf->Cell(50, 8, $cantidad, 1, 1, 'C');
+
+        $total += $cantidad;
+    }
+
+} else {
+
+    $pdf->Cell(
+        180,
+        8,
+        'No se encontraron productos ingresados en este mes.',
+        1,
+        1,
+        'C'
+    );
+}
+
+$pdf->SetFont('Arial', 'B', 10);
+
+$pdf->Cell(130, 8, 'TOTAL', 1, 0, 'R');
+$pdf->Cell(50, 8, $total, 1, 1, 'C');
+
+$pdf->Ln(10);
 
 $pdf->SetFont('Arial', '', 9);
 
-$fecha_hoy = date('Y-m-d');
+$pdf->Cell(
+    0,
+    6,
+    'Fecha de generacion: ' . date('d/m/Y'),
+    0,
+    1,
+    'R'
+);
 
-$sql = "
-SELECT s.fecha_salida, p.nombre_comercial, s.cantidad_usada
-FROM salidas s
-INNER JOIN productos p ON s.producto_id = p.id_producto
-WHERE DATE(s.fecha_salida) = '$fecha_hoy'
-ORDER BY s.id_salida DESC
-";
+$pdf->Output(
+    'I',
+    'reporte_productos_' . $mes . '_' . $anio . '.pdf'
+);
 
-$result = $conn->query($sql);
-
-if (!$result || $result->num_rows == 0) {
-    $pdf->Cell(190, 10, utf8_decode('No hay productos utilizados el día de hoy'), 1, 1, 'C');
-} else {
-    $dias = [
-        'Monday' => 'Lunes', 'Tuesday' => 'Martes', 'Wednesday' => 'Miercoles',
-        'Thursday' => 'Jueves', 'Friday' => 'Viernes', 'Saturday' => 'Sabado', 'Sunday' => 'Domingo'
-    ];
-
-    while ($row = $result->fetch_assoc()) {
-        $fecha = date('d/m/Y', strtotime($row['fecha_salida']));
-        $dia_en = date('l', strtotime($row['fecha_salida']));
-        $dia = $dias[$dia_en] ?? 'S/D';
-
-        $pdf->Cell(25, 8, $fecha, 1, 0, 'C');
-        $pdf->Cell(25, 8, utf8_decode($dia), 1, 0, 'C');
-        $pdf->Cell(70, 8, utf8_decode($row['nombre_comercial']), 1, 0, 'L');
-        $pdf->Cell(20, 8, $row['cantidad_usada'], 1, 0, 'C'); 
-        $pdf->Cell(25, 8, '', 1, 0, 'C'); 
-        $pdf->Cell(25, 8, '', 1, 1, 'C'); 
-    }
-}
-
-$pdf->Output();
 ?>

@@ -717,8 +717,5 @@ if (modalInactivar) {
 }
 
 </script>
-
-
 </body>
-
 </html>
