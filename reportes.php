@@ -24,10 +24,6 @@ include("common/conexion.php");
 
     <style>
 
-        /* =====================================================
-           FONDO GENERAL
-        ===================================================== */
-
         body {
             background-image:
                 linear-gradient(
@@ -44,10 +40,6 @@ include("common/conexion.php");
             min-height: 100vh;
         }
 
-
-        /* =====================================================
-           CONTENEDOR PRINCIPAL
-        ===================================================== */
 
         .main-card {
             background: rgba(15, 15, 15, 0.90);
@@ -66,10 +58,6 @@ include("common/conexion.php");
             margin-bottom: 1rem;
         }
 
-
-        /* =====================================================
-           TITULO PRINCIPAL
-        ===================================================== */
 
         .main-title {
             border-bottom:
@@ -92,10 +80,6 @@ include("common/conexion.php");
             margin-bottom: 0;
         }
 
-
-        /* =====================================================
-           TARJETAS DE REPORTES
-        ===================================================== */
 
         .report-box {
             background: rgba(35, 35, 35, 0.95);
@@ -129,10 +113,6 @@ include("common/conexion.php");
         }
 
 
-        /* =====================================================
-           TITULOS DE LAS TARJETAS
-        ===================================================== */
-
         .report-box h4 {
             color: #ffffff !important;
 
@@ -147,10 +127,6 @@ include("common/conexion.php");
         }
 
 
-        /* =====================================================
-           DESCRIPCIONES
-        ===================================================== */
-
         .report-box p {
             color: #eeeeee !important;
 
@@ -162,20 +138,12 @@ include("common/conexion.php");
         }
 
 
-        /* =====================================================
-           ETIQUETAS
-        ===================================================== */
-
         .report-box label {
             color: #ffffff !important;
 
             font-size: 0.85rem;
         }
 
-
-        /* =====================================================
-           ETIQUETAS SUPERIORES
-        ===================================================== */
 
         .report-box .badge {
             background-color: #747e88 !important;
@@ -191,10 +159,6 @@ include("common/conexion.php");
             padding: 0.5rem 0.65rem;
         }
 
-
-        /* =====================================================
-           CAMPOS DE FECHA
-        ===================================================== */
 
         .report-box .form-control {
             background-color: #f5f5f5;
@@ -228,19 +192,11 @@ include("common/conexion.php");
         }
 
 
-        /* =====================================================
-           SEPARADORES
-        ===================================================== */
-
         .report-box .border-top {
             border-color:
                 rgba(255, 255, 255, 0.15) !important;
         }
 
-
-        /* =====================================================
-           BOTONES
-        ===================================================== */
 
         .report-box .btn {
             background-color: #747e88;
@@ -276,10 +232,6 @@ include("common/conexion.php");
                 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
 
         @media (max-width: 767px) {
 
@@ -426,7 +378,7 @@ include("common/conexion.php");
                                 </span>
 
                                 <h4>
-                                    Reporte Consolidador
+                                    Reporte Mensual
                                 </h4>
 
                             </div>
@@ -520,6 +472,57 @@ include("common/conexion.php");
                                 Consultar Historial
 
                             </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     INVENTARIO ACTUAL
+                ================================================== -->
+
+                <div class="col-md-6">
+
+                    <div class="report-box h-100 d-flex flex-column justify-content-between">
+
+
+                        <div>
+
+                            <div class="d-flex align-items-center mb-3">
+
+                                <span class="badge me-2">
+                                    Inventario
+                                </span>
+
+                                <h4>
+                                    Inventario Actual
+                                </h4>
+
+                            </div>
+
+
+                            <p>
+                                Genera directamente el reporte PDF
+                                con los productos y cantidades
+                                disponibles actualmente en el almacén.
+                            </p>
+
+                        </div>
+
+
+                       <a
+                            href="reporte_inventario.php"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn w-100">
+
+                            Generar Inventario
+
+                        </a>
 
                         </div>
 
