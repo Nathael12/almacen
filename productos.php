@@ -11,7 +11,6 @@ if (!isset($_SESSION['usuario'])) {
 
 include("common/conexion.php");
 
-
 // MENSAJES
 
 if (isset($_SESSION['mensaje'])) {
@@ -28,11 +27,9 @@ if (isset($_SESSION['mensaje'])) {
 
 }
 
-
 // BÚSQUEDA
 
 $busqueda = "";
-
 
 // CONSULTA DE PRODUCTOS
 
@@ -60,7 +57,6 @@ LEFT JOIN lotes l
 
 WHERE p.estado = 1
 ";
-
 
 if (!empty($_GET['q'])) {
 
@@ -90,7 +86,6 @@ if (!empty($_GET['q'])) {
         ORDER BY p.nombre_comercial ASC
     ";
 
-
     $stmt = $conn->prepare($sql);
 
     $like = "%$busqueda%";
@@ -106,9 +101,7 @@ if (!empty($_GET['q'])) {
 
     $result = $stmt->get_result();
 
-
 } else {
-
 
     $sql .= "
         GROUP BY
@@ -126,11 +119,9 @@ if (!empty($_GET['q'])) {
         ORDER BY p.nombre_comercial ASC
     ";
 
-
     $result = $conn->query($sql);
 
 }
-
 
 // UNIDADES
 
@@ -157,35 +148,17 @@ $unidades =
 
 </head>
 
-
 <body>
-
 
 <?php include("navbar.php"); ?>
 
-
 <div class="container py-4">
-
 
     <!-- MENSAJE -->
 
     <?php if (isset($mensaje)): ?>
 
-        <div class="alert alert-<?= htmlspecialchars($tipo_mensaje) ?>
-                    alert-dismissible fade show mb-4"
-             role="alert">
-
-            <?= htmlspecialchars($mensaje) ?>
-
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-            </button>
-
-        </div>
-
     <?php endif; ?>
-
 
     <!-- TÍTULO -->
 
@@ -199,12 +172,10 @@ $unidades =
 
     </div>
 
-
     <!-- BUSCADOR -->
 
     <form method="get"
           class="d-flex mb-3">
-
 
         <input type="text"
                name="q"
@@ -212,13 +183,11 @@ $unidades =
                placeholder="Buscar producto..."
                value="<?= htmlspecialchars($busqueda) ?>">
 
-
         <button class="btn btn-primary">
 
             Buscar
 
         </button>
-
 
         <button type="button"
                 class="btn btn-success ms-2"
@@ -229,67 +198,51 @@ $unidades =
 
         </button>
 
-
     </form>
-
 
     <!-- TABLA -->
 
     <table class="table table-bordered table-striped">
 
-
         <thead class="table-dark">
 
-
             <tr>
-
 
                 <th>
                     #
                 </th>
 
-
                 <th>
                     Nombre Comercial
                 </th>
-
 
                 <th>
                     Nombre Común
                 </th>
 
-
                 <th>
                     Presentación
                 </th>
-
 
                 <th>
                     Categoría
                 </th>
 
-
                 <th>
                     Total Lotes
                 </th>
-
 
                 <th>
                     Acciones
                 </th>
 
-
             </tr>
-
 
         </thead>
 
-
         <tbody>
 
-
         <?php if ($result && $result->num_rows > 0): ?>
-
 
             <?php
 
@@ -299,9 +252,7 @@ $unidades =
 
             ?>
 
-
             <tr>
-
 
                 <!-- NÚMERO -->
 
@@ -310,7 +261,6 @@ $unidades =
                     <?= $num++ ?>
 
                 </td>
-
 
                 <!-- NOMBRE COMERCIAL -->
 
@@ -322,7 +272,6 @@ $unidades =
 
                 </td>
 
-
                 <!-- NOMBRE COMÚN -->
 
                 <td>
@@ -333,13 +282,11 @@ $unidades =
 
                 </td>
 
-
                 <!-- PRESENTACIÓN -->
 
                 <td>
 
                     <?php if ($row['presentacion'] !== null): ?>
-
 
                         <?php
 
@@ -363,7 +310,6 @@ $unidades =
 
                         ?>
 
-
                         <span class="badge bg-light text-dark border">
 
                             <?= htmlspecialchars($presentacion) ?>
@@ -374,9 +320,7 @@ $unidades =
 
                         </span>
 
-
                     <?php else: ?>
-
 
                         <span class="text-muted">
 
@@ -384,11 +328,9 @@ $unidades =
 
                         </span>
 
-
                     <?php endif; ?>
 
                 </td>
-
 
                 <!-- CATEGORÍA -->
 
@@ -399,7 +341,6 @@ $unidades =
                     ) ?>
 
                 </td>
-
 
                 <!-- TOTAL LOTES -->
 
@@ -413,14 +354,11 @@ $unidades =
 
                 </td>
 
-
                 <!-- ACCIONES -->
 
                 <td>
 
-
                     <div class="d-flex justify-content-center gap-2">
-
 
                         <!-- EDITAR -->
 
@@ -431,7 +369,6 @@ $unidades =
                             Editar
 
                         </button>
-
 
                         <!-- BORRAR -->
 
@@ -448,7 +385,6 @@ $unidades =
                             Borrar
 
                         </button>
-
 
                         <!-- USAR -->
 
@@ -468,21 +404,15 @@ $unidades =
 
                         </button>
 
-
                     </div>
-
 
                 </td>
 
-
             </tr>
-
 
             <?php endwhile; ?>
 
-
         <?php else: ?>
-
 
             <tr>
 
@@ -495,18 +425,13 @@ $unidades =
 
             </tr>
 
-
         <?php endif; ?>
-
 
         </tbody>
 
-
     </table>
 
-
 </div>
-
 
 <!-- MODALES -->
 
@@ -514,79 +439,69 @@ $unidades =
     'modals/modal_agregar_producto.php'
 ); ?>
 
-
 <?php include_once(
     'modals/modal_editar_productos.php'
 ); ?>
-
 
 <?php include_once(
     'modals/modal_usar_producto.php'
 ); ?>
 
-
 <?php include_once(
     'modals/modal_borrar_producto.php'
 ); ?>
 
-
 <!-- BOOTSTRAP -->
 
 <script src="js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($mensaje)): ?>
+<script>
+Swal.fire({icon: <?= json_encode($tipo_mensaje === 'danger' ? 'error' : ($tipo_mensaje === 'warning' ? 'warning' : ($tipo_mensaje === 'success' ? 'success' : 'info'))) ?>, title: <?= json_encode($tipo_mensaje === 'success' ? 'Listo' : ($tipo_mensaje === 'danger' ? 'Ocurri� un error' : 'Aviso')) ?>, text: <?= json_encode($mensaje, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>});
+</script>
+<?php endif; ?>
 
 <script>
-
 
 const modalInactivarProd =
     document.getElementById(
         'modalInactivarProducto'
     );
 
-
 if (modalInactivarProd) {
-
 
     modalInactivarProd.addEventListener(
         'show.bs.modal',
         event => {
 
-
             const boton =
                 event.relatedTarget;
-
 
             const idProducto =
                 boton.getAttribute(
                     'data-id'
                 );
 
-
             const nombreProducto =
                 boton.getAttribute(
                     'data-nombre'
                 );
 
-
             modalInactivarProd.querySelector(
                 '#id_producto_modal'
             ).value = idProducto;
-
 
             modalInactivarProd.querySelector(
                 '#nombre_producto_modal'
             ).textContent =
                 nombreProducto;
 
-
         }
     );
 
 }
 
-
 </script>
-
 
 </body>
 

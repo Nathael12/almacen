@@ -6,7 +6,6 @@ $logged = $_SESSION['LOGGED'] ?? 0;
 
 include("common/conexion.php");
 
-
 /* =========================================================
    MENSAJES
 ========================================================= */
@@ -24,7 +23,6 @@ if (isset($_SESSION['mensaje'])) {
     );
 }
 
-
 /* =========================================================
    FILTRO POR PRODUCTO
 ========================================================= */
@@ -33,7 +31,6 @@ $id_producto =
     isset($_GET['id_producto'])
         ? intval($_GET['id_producto'])
         : 0;
-
 
 /* =========================================================
    CONDICIÓN DEL PRODUCTO
@@ -47,7 +44,6 @@ if ($id_producto > 0) {
         " AND l.producto_id = $id_producto ";
 
 }
-
 
 /* =========================================================
    LOTES ACTIVOS
@@ -128,14 +124,12 @@ ORDER BY
 
 ";
 
-
 /* =========================================================
    EJECUTAR LOTES ACTIVOS
 ========================================================= */
 
 $result =
     $conn->query($sql_activos);
-
 
 /* =========================================================
    HISTORIAL DE SALIDAS
@@ -183,7 +177,6 @@ WHERE 1 = 1
 
 ";
 
-
 /* =========================================================
    FILTRO DEL HISTORIAL
 ========================================================= */
@@ -195,7 +188,6 @@ if ($id_producto > 0) {
 
 }
 
-
 $sql_salidos .= "
 
 ORDER BY
@@ -204,10 +196,8 @@ ORDER BY
 
 ";
 
-
 $result_salidos =
     $conn->query($sql_salidos);
-
 
 /* =========================================================
    LOTES ACTIVOS
@@ -233,7 +223,6 @@ $caducando = $conn->query("
 
 ")->fetch_assoc()['total'];
 
-
 /* =========================================================
    VENCIDOS
 ========================================================= */
@@ -254,7 +243,6 @@ $vencidos = $conn->query("
         AND cantidad > 0
 
 ")->fetch_assoc()['total'];
-
 
 /* =========================================================
    LOTES ACTIVOS
@@ -282,8 +270,6 @@ $activos = $conn->query("
 <html lang="es">
 
 <head>
-
-```
 <meta charset="UTF-8">
 
 <title>Registro</title>
@@ -297,8 +283,6 @@ $activos = $conn->query("
     rel="stylesheet"
     href="css/registro.css"
 >
-```
-
 </head>
 
 <body>
@@ -306,33 +290,6 @@ $activos = $conn->query("
 <?php include("navbar.php"); ?>
 
 <div class="container py-4">
-
-```
-<!-- =====================================================
-     MENSAJE
-====================================================== -->
-
-<?php if (isset($mensaje)): ?>
-
-    <div
-        class="alert alert-<?= htmlspecialchars($tipo_mensaje) ?> alert-dismissible fade show mb-4"
-        role="alert"
-    >
-
-        <?= htmlspecialchars($mensaje) ?>
-
-        <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-        ></button>
-
-    </div>
-
-<?php endif; ?>
-
-
-
 <!-- =====================================================
      TITULO
 ====================================================== -->
@@ -345,14 +302,11 @@ $activos = $conn->query("
 
 </div>
 
-
-
 <!-- =====================================================
      TARJETAS
 ====================================================== -->
 
 <div class="row mb-4">
-
 
     <!-- LOTES ACTIVOS -->
 
@@ -376,8 +330,6 @@ $activos = $conn->query("
 
     </div>
 
-
-
     <!-- CADUCANDO -->
 
     <div class="col-md-3">
@@ -400,8 +352,6 @@ $activos = $conn->query("
 
     </div>
 
-
-
     <!-- VENCIDOS -->
 
     <div class="col-md-3">
@@ -423,8 +373,6 @@ $activos = $conn->query("
         </div>
 
     </div>
-
-
 
     <!-- TOTAL PRODUCTOS -->
 
@@ -453,10 +401,7 @@ $activos = $conn->query("
 
     </div>
 
-
 </div>
-
-
 
 <!-- =====================================================
      TABLA DE INVENTARIO ACTUAL
@@ -502,21 +447,17 @@ $activos = $conn->query("
 
     </thead>
 
-
     <tbody>
-
 
     <?php if (
         $result &&
         $result->num_rows > 0
     ): ?>
 
-
         <?php while (
             $row =
             $result->fetch_assoc()
         ): ?>
-
 
             <?php
 
@@ -525,9 +466,7 @@ $activos = $conn->query("
                     $row['dias_para_caducar']
                 );
 
-
             $clase_fila = '';
-
 
             if ($dias <= 0) {
 
@@ -543,11 +482,9 @@ $activos = $conn->query("
 
             ?>
 
-
             <tr
                 class="<?= $clase_fila ?>"
             >
-
 
                 <!-- PRODUCTO -->
 
@@ -559,8 +496,6 @@ $activos = $conn->query("
 
                 </td>
 
-
-
                 <!-- PROVEEDOR -->
 
                 <td>
@@ -570,8 +505,6 @@ $activos = $conn->query("
                     ) ?>
 
                 </td>
-
-
 
                 <!-- CANTIDAD -->
 
@@ -588,8 +521,6 @@ $activos = $conn->query("
                     </span>
 
                 </td>
-
-
 
                 <!-- ENTRADA -->
 
@@ -616,8 +547,6 @@ $activos = $conn->query("
 
                 </td>
 
-
-
                 <!-- CADUCIDAD -->
 
                 <td>
@@ -642,8 +571,6 @@ $activos = $conn->query("
                     <?php endif; ?>
 
                 </td>
-
-
 
                 <!-- DIAS RESTANTES -->
 
@@ -670,8 +597,6 @@ $activos = $conn->query("
 
                 </td>
 
-
-
                 <!-- ESTADO -->
 
                 <td>
@@ -686,15 +611,11 @@ $activos = $conn->query("
 
                 </td>
 
-
             </tr>
-
 
         <?php endwhile; ?>
 
-
     <?php else: ?>
-
 
         <tr>
 
@@ -709,15 +630,11 @@ $activos = $conn->query("
 
         </tr>
 
-
     <?php endif; ?>
-
 
     </tbody>
 
 </table>
-
-
 
 <!-- =====================================================
      HISTORIAL
@@ -731,12 +648,9 @@ $activos = $conn->query("
 
 </h4>
 
-
-
 <table
     class="table table-bordered table-hover align-middle"
 >
-
 
     <thead class="table-secondary">
 
@@ -762,25 +676,19 @@ $activos = $conn->query("
 
     </thead>
 
-
-
     <tbody>
-
 
     <?php if (
         $result_salidos &&
         $result_salidos->num_rows > 0
     ): ?>
 
-
         <?php while (
             $row_s =
             $result_salidos->fetch_assoc()
         ): ?>
 
-
             <tr>
-
 
                 <!-- PRODUCTO -->
 
@@ -791,8 +699,6 @@ $activos = $conn->query("
                     ) ?>
 
                 </td>
-
-
 
                 <!-- CANTIDAD UTILIZADA -->
 
@@ -809,8 +715,6 @@ $activos = $conn->query("
                     </span>
 
                 </td>
-
-
 
                 <!-- FECHA SALIDA -->
 
@@ -837,8 +741,6 @@ $activos = $conn->query("
 
                 </td>
 
-
-
                 <!-- ESTADO -->
 
                 <td>
@@ -853,15 +755,11 @@ $activos = $conn->query("
 
                 </td>
 
-
             </tr>
-
 
         <?php endwhile; ?>
 
-
     <?php else: ?>
-
 
         <tr>
 
@@ -876,12 +774,9 @@ $activos = $conn->query("
 
         </tr>
 
-
     <?php endif; ?>
 
-
     </tbody>
-
 
 </table>
 
@@ -890,6 +785,16 @@ $activos = $conn->query("
 <script
     src="js/bootstrap.bundle.min.js"
 ></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($mensaje)): ?>
+<script>
+Swal.fire({
+    icon: <?= json_encode($tipo_mensaje === 'danger' ? 'error' : ($tipo_mensaje === 'warning' ? 'warning' : ($tipo_mensaje === 'success' ? 'success' : 'info'))) ?>,
+    title: <?= json_encode($tipo_mensaje === 'success' ? 'Listo' : ($tipo_mensaje === 'danger' ? 'Ocurrió un error' : 'Aviso')) ?>,
+    text: <?= json_encode($mensaje, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>
+});
+</script>
+<?php endif; ?>
 
 </body>
 

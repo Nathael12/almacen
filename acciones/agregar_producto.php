@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $unidad_id = (int)$unidad_id;
 
-
     $sql = "INSERT INTO productos
             (
                 nombre_comercial,
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )
             VALUES (?, ?, ?, ?, ?)";
 
-
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -55,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Error al preparar la consulta: " . $conn->error);
 
     }
-
 
     $stmt->bind_param(
         "ssdsi",
@@ -65,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria,
         $unidad_id
     );
-
 
     if ($stmt->execute()) {
 
@@ -77,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error al guardar el producto: " . $stmt->error;
 
     }
-
 
     $stmt->close();
 

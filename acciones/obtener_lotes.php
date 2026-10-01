@@ -8,13 +8,11 @@ $id_producto = isset($_GET['id_producto'])
     ? intval($_GET['id_producto'])
     : 0;
 
-
 if ($id_producto <= 0) {
 
     echo json_encode([]);
     exit;
 }
-
 
 $sql = "
     SELECT
@@ -41,9 +39,7 @@ $sql = "
     ORDER BY fecha_caducidad ASC
 ";
 
-
 $stmt = $conn->prepare($sql);
-
 
 if (!$stmt) {
 
@@ -54,21 +50,16 @@ if (!$stmt) {
     exit;
 }
 
-
 $stmt->bind_param(
     "i",
     $id_producto
 );
 
-
 $stmt->execute();
-
 
 $result = $stmt->get_result();
 
-
 $lotes = [];
-
 
 while ($row = $result->fetch_assoc()) {
 
@@ -85,7 +76,6 @@ while ($row = $result->fetch_assoc()) {
     ];
 
 }
-
 
 echo json_encode($lotes);
 

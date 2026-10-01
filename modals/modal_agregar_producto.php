@@ -21,7 +21,6 @@
 
                 </div>
 
-
                 <div class="modal-body">
 
                     <!-- NOMBRE COMERCIAL -->
@@ -40,7 +39,6 @@
 
                     </div>
 
-
                     <!-- NOMBRE COMÚN -->
 
                     <div class="mb-3">
@@ -55,7 +53,6 @@
                                placeholder="Ej. Jabón de ropa">
 
                     </div>
-
 
                     <!-- PRESENTACIÓN -->
 
@@ -78,7 +75,6 @@
                         </small>
 
                     </div>
-
 
                     <!-- UNIDAD DE MEDIDA -->
 
@@ -110,7 +106,6 @@
 
                     </div>
 
-
                     <!-- CATEGORÍA -->
 
                     <div class="mb-3">
@@ -127,7 +122,6 @@
                     </div>
 
                 </div>
-
 
                 <div class="modal-footer">
 

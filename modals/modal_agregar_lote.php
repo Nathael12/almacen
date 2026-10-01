@@ -38,7 +38,6 @@
                         </select>
                     </div>
 
-
                     <!-- Proveedor -->
                     <div class="mb-3">
 
@@ -63,7 +62,6 @@
 
                     </div>
 
-
                     <!-- Cantidad -->
                     <div class="mb-3">
 
@@ -85,7 +83,6 @@
 
                     </div>
 
-
                     <!-- Fecha Entrada -->
                     <div class="mb-3">
 
@@ -101,7 +98,6 @@
                             required>
 
                     </div>
-
 
                     <!-- Fecha Caducidad -->
                     <div class="mb-3">
@@ -120,7 +116,6 @@
 
                 </div>
 
-
                 <div class="modal-footer">
 
                     <button
@@ -131,7 +126,6 @@
                         Cancelar
 
                     </button>
-
 
                     <button
                         type="submit"

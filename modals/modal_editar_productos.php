@@ -56,7 +56,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
 
                 </div>
 
-
                 <div class="modal-body">
 
                     <!-- NOMBRE COMERCIAL -->
@@ -75,7 +74,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
 
                     </div>
 
-
                     <!-- NOMBRE COMÚN -->
 
                     <div class="mb-3">
@@ -90,7 +88,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
                                value="<?= htmlspecialchars($row_modal['nombre_comun']) ?>">
 
                     </div>
-
 
                     <!-- PRESENTACIÓN -->
 
@@ -113,7 +110,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
                         </small>
 
                     </div>
-
 
                     <!-- UNIDAD -->
 
@@ -153,7 +149,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
 
                     </div>
 
-
                     <!-- CATEGORÍA -->
 
                     <div class="mb-3">
@@ -170,7 +165,6 @@ while ($row_modal = $result_modal->fetch_assoc()):
                     </div>
 
                 </div>
-
 
                 <div class="modal-footer">
 

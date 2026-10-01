@@ -40,7 +40,6 @@ include("common/conexion.php");
             min-height: 100vh;
         }
 
-
         .main-card {
             background: rgba(15, 15, 15, 0.90);
 
@@ -58,14 +57,12 @@ include("common/conexion.php");
             margin-bottom: 1rem;
         }
 
-
         .main-title {
             border-bottom:
                 1px solid rgba(255, 255, 255, 0.20);
 
             padding-bottom: 1rem;
         }
-
 
         .main-card h2 {
             color: #ffffff !important;
@@ -79,7 +76,6 @@ include("common/conexion.php");
 
             margin-bottom: 0;
         }
-
 
         .report-box {
             background: rgba(35, 35, 35, 0.95);
@@ -100,7 +96,6 @@ include("common/conexion.php");
                 all 0.2s ease-in-out;
         }
 
-
         .report-box:hover {
             border-color:
                 rgba(255, 255, 255, 0.30);
@@ -111,7 +106,6 @@ include("common/conexion.php");
             transform:
                 translateY(-2px);
         }
-
 
         .report-box h4 {
             color: #ffffff !important;
@@ -126,7 +120,6 @@ include("common/conexion.php");
             margin-bottom: 0;
         }
 
-
         .report-box p {
             color: #eeeeee !important;
 
@@ -137,13 +130,11 @@ include("common/conexion.php");
             margin-top: 0.5rem;
         }
 
-
         .report-box label {
             color: #ffffff !important;
 
             font-size: 0.85rem;
         }
-
 
         .report-box .badge {
             background-color: #747e88 !important;
@@ -158,7 +149,6 @@ include("common/conexion.php");
 
             padding: 0.5rem 0.65rem;
         }
-
 
         .report-box .form-control {
             background-color: #f5f5f5;
@@ -178,7 +168,6 @@ include("common/conexion.php");
             font-size: 0.95rem;
         }
 
-
         .report-box .form-control:focus {
             background-color: #ffffff;
 
@@ -191,12 +180,10 @@ include("common/conexion.php");
                 rgba(116, 126, 136, 0.25);
         }
 
-
         .report-box .border-top {
             border-color:
                 rgba(255, 255, 255, 0.15) !important;
         }
-
 
         .report-box .btn {
             background-color: #747e88;
@@ -217,7 +204,6 @@ include("common/conexion.php");
                 all 0.2s ease-in-out;
         }
 
-
         .report-box .btn:hover {
             background-color: #66707a;
 
@@ -232,7 +218,6 @@ include("common/conexion.php");
                 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
-
         @media (max-width: 767px) {
 
             .main-card {
@@ -241,11 +226,9 @@ include("common/conexion.php");
                 margin-top: 0.5rem;
             }
 
-
             .main-card h2 {
                 font-size: 1.6rem;
             }
-
 
             .report-box {
                 min-height: auto;
@@ -259,18 +242,13 @@ include("common/conexion.php");
 
 </head>
 
-
 <body>
-
 
     <?php include("navbar.php"); ?>
 
-
     <div class="container py-4">
 
-
         <div class="main-card">
-
 
             <!-- =================================================
                  TITULO
@@ -284,9 +262,7 @@ include("common/conexion.php");
 
             </div>
 
-
             <div class="row g-4">
-
 
                 <!-- =================================================
                      PRODUCTOS INGRESADOS
@@ -295,7 +271,6 @@ include("common/conexion.php");
                 <div class="col-md-6">
 
                     <div class="report-box h-100 d-flex flex-column justify-content-between">
-
 
                         <div>
 
@@ -311,13 +286,11 @@ include("common/conexion.php");
 
                             </div>
 
-
                             <p>
                                 Genera un reporte de los productos
                                 ingresados al almacén durante el mes
                                 seleccionado.
                             </p>
-
 
                             <div class="mb-3">
 
@@ -329,7 +302,6 @@ include("common/conexion.php");
 
                                 </label>
 
-
                                 <input
                                     type="month"
                                     id="mes_productos"
@@ -339,7 +311,6 @@ include("common/conexion.php");
                             </div>
 
                         </div>
-
 
                         <div class="pt-3 border-top mt-3">
 
@@ -354,11 +325,9 @@ include("common/conexion.php");
 
                         </div>
 
-
                     </div>
 
                 </div>
-
 
                 <!-- =================================================
                      REPORTE CONSOLIDADOR
@@ -367,7 +336,6 @@ include("common/conexion.php");
                 <div class="col-md-6">
 
                     <div class="report-box h-100 d-flex flex-column justify-content-between">
-
 
                         <div>
 
@@ -383,12 +351,10 @@ include("common/conexion.php");
 
                             </div>
 
-
                             <p>
                                 Consulta el historial de movimientos
                                 especificando el mes y año.
                             </p>
-
 
                             <div class="mb-3">
 
@@ -400,7 +366,6 @@ include("common/conexion.php");
 
                                 </label>
 
-
                                 <input
                                     type="month"
                                     id="mes"
@@ -410,7 +375,6 @@ include("common/conexion.php");
                             </div>
 
                         </div>
-
 
                         <div class="pt-3 mt-3">
 
@@ -425,11 +389,9 @@ include("common/conexion.php");
 
                         </div>
 
-
                     </div>
 
                 </div>
-
 
                 <!-- =================================================
                      HISTORIAL SEMANAL
@@ -438,7 +400,6 @@ include("common/conexion.php");
                 <div class="col-md-6">
 
                     <div class="report-box h-100 d-flex flex-column justify-content-between">
-
 
                         <div>
 
@@ -454,14 +415,12 @@ include("common/conexion.php");
 
                             </div>
 
-
                             <p>
                                 Consulta el historial de reportes
                                 semanales registrados.
                             </p>
 
                         </div>
-
 
                         <div class="pt-3 border-top mt-3">
 
@@ -475,11 +434,9 @@ include("common/conexion.php");
 
                         </div>
 
-
                     </div>
 
                 </div>
-
 
                 <!-- =================================================
                      INVENTARIO ACTUAL
@@ -488,7 +445,6 @@ include("common/conexion.php");
                 <div class="col-md-6">
 
                     <div class="report-box h-100 d-flex flex-column justify-content-between">
-
 
                         <div>
 
@@ -504,7 +460,6 @@ include("common/conexion.php");
 
                             </div>
 
-
                             <p>
                                 Genera directamente el reporte PDF
                                 con los productos y cantidades
@@ -512,7 +467,6 @@ include("common/conexion.php");
                             </p>
 
                         </div>
-
 
                        <a
                             href="reporte_inventario.php"
@@ -526,23 +480,18 @@ include("common/conexion.php");
 
                         </div>
 
-
                     </div>
 
                 </div>
 
-
             </div>
-
 
         </div>
 
-
     </div>
 
-
     <script src="js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
 
@@ -557,19 +506,14 @@ include("common/conexion.php");
                     'mes_productos'
                 ).value;
 
-
             if (!val) {
 
-                alert(
-                    "Por favor, selecciona un mes válido."
-                );
+                Swal.fire({ icon: 'warning', title: 'Aviso', text: "Por favor, selecciona un mes válido." });
 
                 return;
             }
 
-
             let partes = val.split('-');
-
 
             window.open(
                 'reporte_pdf.php?anio=' +
@@ -580,7 +524,6 @@ include("common/conexion.php");
             );
 
         }
-
 
         /* =====================================================
            REPORTE SEMANAL
@@ -593,16 +536,12 @@ include("common/conexion.php");
                     'fecha_semana'
                 ).value;
 
-
             if (!fecha) {
 
-                alert(
-                    "Por favor, selecciona una fecha."
-                );
+                Swal.fire({ icon: 'warning', title: 'Aviso', text: "Por favor, selecciona una fecha." });
 
                 return;
             }
-
 
             window.open(
                 'reporte_pdf_Semanal.php?fecha=' +
@@ -611,7 +550,6 @@ include("common/conexion.php");
             );
 
         }
-
 
         /* =====================================================
            REPORTE MENSUAL
@@ -624,19 +562,14 @@ include("common/conexion.php");
                     'mes'
                 ).value;
 
-
             if (!val) {
 
-                alert(
-                    "Por favor, selecciona un mes válido."
-                );
+                Swal.fire({ icon: 'warning', title: 'Aviso', text: "Por favor, selecciona un mes válido." });
 
                 return;
             }
 
-
             let partes = val.split('-');
-
 
             window.open(
                 'reporte_pdf_General.php?anio=' +
@@ -649,7 +582,6 @@ include("common/conexion.php");
         }
 
     </script>
-
 
 </body>
 </html>

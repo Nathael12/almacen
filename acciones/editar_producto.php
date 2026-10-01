@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ? (int)$_POST['unidad_id']
         : 0;
 
-
     // Validar ID
 
     if ($id <= 0) {
@@ -22,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("ID de producto no válido.");
 
     }
-
 
     // Validar nombre
 
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
-
     // Validar unidad
 
     if ($unidad_id <= 0) {
@@ -40,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Debe seleccionar una unidad de medida.");
 
     }
-
 
     // Validar presentación
 
@@ -59,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-
     // ACTUALIZAR PRODUCTO
 
     $sql = "UPDATE productos SET
@@ -72,16 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             WHERE id_producto = ?";
 
-
     $stmt = $conn->prepare($sql);
-
 
     if (!$stmt) {
 
         die("Error al preparar la consulta: " . $conn->error);
 
     }
-
 
     $stmt->bind_param(
         "ssdsii",
@@ -93,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id
     );
 
-
     if ($stmt->execute()) {
 
         header("Location: ../productos.php");
@@ -104,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error al actualizar el producto: " . $stmt->error;
 
     }
-
 
     $stmt->close();
 

@@ -8,13 +8,29 @@ if (!isset($_SESSION['usuario'])) {
 
 include("common/conexion.php");
 
+if (isset($_SESSION['mensaje'])) {
+    $mensaje = $_SESSION['mensaje'];
+    $tipo_mensaje = $_SESSION['tipo_mensaje'] ?? 'info';
+    unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
+}
+
+if (isset($_GET['mensaje'])) {
+    $mensajes_lote = [
+        'datos_invalidos' => ['warning', 'Revisa los datos', 'Completa los campos con valores válidos.'],
+        'fecha_invalida' => ['warning', 'Fecha inválida', 'La fecha de caducidad no puede ser anterior a la fecha de entrada.'],
+        'cantidad_actualizada' => ['success', 'Cantidad actualizada', 'Se sumó la cantidad al lote existente.'],
+        'lote_agregado' => ['success', 'Lote agregado', 'El lote se registró correctamente.'],
+    ];
+    if (isset($mensajes_lote[$_GET['mensaje']])) {
+        [$icono_mensaje, $titulo_mensaje, $texto_mensaje] = $mensajes_lote[$_GET['mensaje']];
+    }
+}
 
 /* ==========================================
    BUSCADOR
 =========================================== */
 
 $busqueda = "";
-
 
 /* ==========================================
    CONSULTA DE LOTES
@@ -43,7 +59,6 @@ LEFT JOIN proveedor pr
 
 WHERE l.estado = 1
 ";
-
 
 /* ==========================================
    APLICAR BUSQUEDA
@@ -87,7 +102,6 @@ if (!empty($_GET['q'])) {
     $result = $conn->query($sql);
 }
 
-
 /* ==========================================
    PRODUCTOS
 =========================================== */
@@ -96,7 +110,6 @@ $productos = $conn->query("
     SELECT *
     FROM productos
 ");
-
 
 /* ==========================================
    PROVEEDORES
@@ -131,15 +144,11 @@ $proveedores = $conn->query("
 
 </head>
 
-
 <body>
-
 
 <?php include("navbar.php"); ?>
 
-
 <div class="container py-4">
-
 
     <!-- ==========================================
          TITULO
@@ -150,8 +159,6 @@ $proveedores = $conn->query("
         <h2>Control de Lotes</h2>
 
     </div>
-
-
 
     <!-- ==========================================
          BUSCADOR
@@ -170,7 +177,6 @@ $proveedores = $conn->query("
             value="<?= htmlspecialchars($busqueda) ?>"
         >
 
-
         <button
             class="btn btn-primary"
             type="submit"
@@ -179,7 +185,6 @@ $proveedores = $conn->query("
             Buscar
 
         </button>
-
 
         <button
             type="button"
@@ -194,14 +199,11 @@ $proveedores = $conn->query("
 
     </form>
 
-
-
     <!-- ==========================================
          TABLA
     =========================================== -->
 
     <table class="table table-bordered table-striped">
-
 
         <thead class="table-dark">
 
@@ -229,13 +231,9 @@ $proveedores = $conn->query("
 
         </thead>
 
-
-
         <tbody>
 
-
         <?php if ($result && $result->num_rows > 0): ?>
-
 
             <?php
 
@@ -245,9 +243,7 @@ $proveedores = $conn->query("
 
             ?>
 
-
             <tr>
-
 
                 <!-- ==========================================
                      NUMERO
@@ -258,8 +254,6 @@ $proveedores = $conn->query("
                     <?= $num++ ?>
 
                 </td>
-
-
 
                 <!-- ==========================================
                      PRODUCTO
@@ -273,8 +267,6 @@ $proveedores = $conn->query("
 
                 </td>
 
-
-
                 <!-- ==========================================
                      PROVEEDOR
                 =========================================== -->
@@ -286,8 +278,6 @@ $proveedores = $conn->query("
                     ) ?>
 
                 </td>
-
-
 
                 <!-- ==========================================
                      FECHA ENTRADA
@@ -312,8 +302,6 @@ $proveedores = $conn->query("
 
                 </td>
 
-
-
                 <!-- ==========================================
                      FECHA CADUCIDAD
                 =========================================== -->
@@ -337,8 +325,6 @@ $proveedores = $conn->query("
 
                 </td>
 
-
-
                 <!-- ==========================================
                      CANTIDAD
                 =========================================== -->
@@ -354,8 +340,6 @@ $proveedores = $conn->query("
                     </span>
 
                 </td>
-
-
 
                 <!-- ==========================================
                      FECHA SALIDA
@@ -380,17 +364,13 @@ $proveedores = $conn->query("
 
                 </td>
 
-
-
                 <!-- ==========================================
                      ESTADO
                 =========================================== -->
 
                 <td>
 
-
                     <?php if ($row['estado'] == 1): ?>
-
 
                         <span class="badge bg-success">
 
@@ -398,9 +378,7 @@ $proveedores = $conn->query("
 
                         </span>
 
-
                     <?php else: ?>
-
 
                         <span class="badge bg-secondary">
 
@@ -408,13 +386,9 @@ $proveedores = $conn->query("
 
                         </span>
 
-
                     <?php endif; ?>
 
-
                 </td>
-
-
 
                 <!-- ==========================================
                      ACCIONES
@@ -422,11 +396,9 @@ $proveedores = $conn->query("
 
                 <td>
 
-
                     <div
                         class="d-flex justify-content-center gap-2"
                     >
-
 
                         <!-- EDITAR -->
 
@@ -440,8 +412,6 @@ $proveedores = $conn->query("
                             Editar
 
                         </button>
-
-
 
                         <!-- BORRAR -->
 
@@ -460,21 +430,15 @@ $proveedores = $conn->query("
 
                         </button>
 
-
                     </div>
-
 
                 </td>
 
-
             </tr>
-
 
             <?php endwhile; ?>
 
-
         <?php else: ?>
-
 
             <tr>
 
@@ -489,19 +453,13 @@ $proveedores = $conn->query("
 
             </tr>
 
-
         <?php endif; ?>
-
 
         </tbody>
 
-
     </table>
 
-
 </div>
-
-
 
 <!-- ==========================================
      MODAL AGREGAR LOTE
@@ -509,15 +467,11 @@ $proveedores = $conn->query("
 
 <?php include_once('modals/modal_agregar_lote.php'); ?>
 
-
-
 <!-- ==========================================
      MODALES EDITAR LOTE
 =========================================== -->
 
 <?php include_once('modals/modal_editar_lote.php'); ?>
-
-
 
 <!-- ==========================================
      MODAL INACTIVAR LOTE
@@ -531,17 +485,13 @@ $proveedores = $conn->query("
     aria-hidden="true"
 >
 
-
     <div class="modal-dialog">
 
-
         <div class="modal-content">
-
 
             <!-- HEADER -->
 
             <div class="modal-header bg-danger text-white">
-
 
                 <h5
                     class="modal-title"
@@ -552,7 +502,6 @@ $proveedores = $conn->query("
 
                 </h5>
 
-
                 <button
                     type="button"
                     class="btn-close btn-close-white"
@@ -560,10 +509,7 @@ $proveedores = $conn->query("
                     aria-label="Close"
                 ></button>
 
-
             </div>
-
-
 
             <!-- FORMULARIO -->
 
@@ -572,9 +518,7 @@ $proveedores = $conn->query("
                 method="POST"
             >
 
-
                 <div class="modal-body">
-
 
                     <p>
 
@@ -589,7 +533,6 @@ $proveedores = $conn->query("
 
                     </p>
 
-
                     <p
                         class="text-muted small"
                     >
@@ -599,22 +542,17 @@ $proveedores = $conn->query("
 
                     </p>
 
-
                     <input
                         type="hidden"
                         name="id_lote"
                         id="id_lote_modal"
                     >
 
-
                 </div>
-
-
 
                 <!-- FOOTER -->
 
                 <div class="modal-footer">
-
 
                     <button
                         type="button"
@@ -626,7 +564,6 @@ $proveedores = $conn->query("
 
                     </button>
 
-
                     <button
                         type="submit"
                         class="btn btn-danger"
@@ -636,30 +573,31 @@ $proveedores = $conn->query("
 
                     </button>
 
-
                 </div>
-
 
             </form>
 
-
         </div>
-
 
     </div>
 
-
 </div>
-
-
 
 <!-- ==========================================
      BOOTSTRAP
 =========================================== -->
 
 <script src="js/bootstrap.bundle.min.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($mensaje)): ?>
+<script>
+Swal.fire({icon: <?= json_encode($tipo_mensaje === 'danger' ? 'error' : ($tipo_mensaje === 'warning' ? 'warning' : ($tipo_mensaje === 'success' ? 'success' : 'info'))) ?>, title: <?= json_encode($tipo_mensaje === 'success' ? 'Listo' : ($tipo_mensaje === 'danger' ? 'Ocurrió un error' : 'Aviso')) ?>, text: <?= json_encode($mensaje, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>});
+</script>
+<?php elseif (isset($texto_mensaje)): ?>
+<script>
+Swal.fire({icon: <?= json_encode($icono_mensaje) ?>, title: <?= json_encode($titulo_mensaje) ?>, text: <?= json_encode($texto_mensaje) ?>});
+</script>
+<?php endif; ?>
 
 <!-- ==========================================
      SCRIPT MODAL BORRAR
@@ -672,30 +610,24 @@ const modalInactivar =
         'modalInactivarLote'
     );
 
-
 if (modalInactivar) {
-
 
     modalInactivar.addEventListener(
         'show.bs.modal',
         event => {
 
-
             const boton =
                 event.relatedTarget;
-
 
             const idLote =
                 boton.getAttribute(
                     'data-id'
                 );
 
-
             const nombreProducto =
                 boton.getAttribute(
                     'data-nombre'
                 );
-
 
             modalInactivar
                 .querySelector(
@@ -703,13 +635,11 @@ if (modalInactivar) {
                 )
                 .value = idLote;
 
-
             modalInactivar
                 .querySelector(
                     '#nombre_producto_modal'
                 )
                 .textContent = nombreProducto;
-
 
         }
     );
